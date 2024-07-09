@@ -6,6 +6,18 @@ module.exports = {
     "./src/slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+    },
+    colors: {
+      pink: "rgb(219, 133, 147)",
+      claret: "rgb(46, 20, 25)",
+      white: "rgb(245, 232, 234)",
+      cream: "rgb(234, 205, 201)",
+      green: "rgb(173, 243, 188)",
+      darkGreen: "rgb(14, 55, 23)",
+      foam: "rgb(141, 182, 252)",
+    },
     fontFamily: {
       sans: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
     },

@@ -1,0 +1,64 @@
+{
+  "id": "banner",
+  "type": "SharedSlice",
+  "name": "Banner",
+  "description": "Banner",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "inner_text": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Inner Text",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,heading1,heading2,heading3"
+          }
+        },
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "Background Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "background_colour": {
+          "type": "Link",
+          "config": {
+            "label": "Background Colour",
+            "select": "document",
+            "customtypes": [
+              "brand_colour"
+            ]
+          }
+        },
+        "opacity": {
+          "type": "Select",
+          "config": {
+            "label": "opacity",
+            "placeholder": "",
+            "options": [
+              "0.1",
+              "0.2",
+              "0.3",
+              "0.4",
+              "0.5",
+              "0.6",
+              "0.7",
+              "0.8",
+              "0.9"
+            ]
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

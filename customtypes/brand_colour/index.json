@@ -1,0 +1,24 @@
+{
+  "format": "custom",
+  "id": "brand_colour",
+  "label": "Brand Colour",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "colour_code": {
+        "type": "Text",
+        "config": {
+          "label": "Colour code",
+          "placeholder": " (hex, rgb etc)"
+        }
+      }
+    }
+  }
+}

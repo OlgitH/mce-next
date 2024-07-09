@@ -19,12 +19,16 @@ export const repositoryName =
 export const routes = [
   {
     type: "page",
-    uid: "home",
+    uid: "homepage",
     path: "/:lang",
   },
   {
     type: "page",
     path: "/:lang/:uid",
+  },
+  {
+    type: "tour",
+    path: "/:lang/tours/:uid",
   },
 ];
 

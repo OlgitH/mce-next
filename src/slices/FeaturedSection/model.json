@@ -1,0 +1,45 @@
+{
+  "id": "featured_section",
+  "type": "SharedSlice",
+  "name": "FeaturedSection",
+  "description": "FeaturedSection",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": ""
+          }
+        },
+        "featured_blocks": {
+          "type": "Group",
+          "config": {
+            "label": "Featured Blocks",
+            "repeat": true,
+            "fields": {
+              "featured_block": {
+                "type": "Link",
+                "config": {
+                  "label": "Featured Block",
+                  "select": "document",
+                  "customtypes": [
+                    "featured_block"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

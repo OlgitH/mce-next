@@ -8,7 +8,10 @@
     "Main": {
       "uid": {
         "type": "UID",
-        "config": { "label": "UID", "placeholder": "URL slug for the page" }
+        "config": {
+          "label": "UID",
+          "placeholder": "URL slug for the page"
+        }
       },
       "title": {
         "type": "StructuredText",
@@ -24,10 +27,15 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "hero": { "type": "SharedSlice" },
-            "image": { "type": "SharedSlice" },
-            "text_with_features": { "type": "SharedSlice" },
-            "text_with_image": { "type": "SharedSlice" }
+            "featured_section": {
+              "type": "SharedSlice"
+            },
+            "tour_section": {
+              "type": "SharedSlice"
+            },
+            "banner": {
+              "type": "SharedSlice"
+            }
           }
         }
       }
@@ -51,7 +59,10 @@
         "type": "Image",
         "config": {
           "label": "Meta Image",
-          "constraint": { "width": 2400, "height": 1260 },
+          "constraint": {
+            "width": 2400,
+            "height": 1260
+          },
           "thumbnails": []
         }
       }

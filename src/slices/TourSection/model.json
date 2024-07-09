@@ -1,0 +1,55 @@
+{
+  "id": "tour_section",
+  "type": "SharedSlice",
+  "name": "TourSection",
+  "description": "TourSection",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": ""
+          }
+        },
+        "tours": {
+          "type": "Group",
+          "config": {
+            "label": "Tours",
+            "repeat": true,
+            "fields": {
+              "tour": {
+                "type": "Link",
+                "config": {
+                  "label": "Tour",
+                  "select": "document",
+                  "customtypes": [
+                    "tour"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "background_colour": {
+          "type": "Link",
+          "config": {
+            "label": "Background Colour",
+            "select": "document",
+            "customtypes": [
+              "brand_colour"
+            ]
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
