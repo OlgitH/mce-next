@@ -1,4 +1,4 @@
-export default function Footer() {
+function Footer() {
   return (
     <section className="bg-black text-cream">
       <div className="container">
@@ -18,3 +18,5 @@ export default function Footer() {
     </section>
   );
 }
+
+export default Footer;
