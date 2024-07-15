@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <section className="bg-black text-cream">
+    <footer className="bg-black text-cream">
       <div className="container">
         <div className="py-28 flex flex-col items-center w-full">
           <h3 className="">
@@ -15,7 +15,7 @@ function Footer() {
           </a>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 
