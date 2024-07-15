@@ -1,8 +1,8 @@
 {
-  "id": "featured_section",
+  "id": "feature_list",
   "type": "SharedSlice",
-  "name": "FeaturedSection",
-  "description": "FeaturedSection",
+  "name": "FeatureList",
+  "description": "FeatureList",
   "variations": [
     {
       "id": "default",
@@ -12,26 +12,19 @@
       "description": "Default",
       "imageUrl": "",
       "primary": {
-        "title": {
-          "type": "Text",
-          "config": {
-            "label": "Title",
-            "placeholder": ""
-          }
-        },
-        "featured_blocks": {
+        "featured_items": {
           "type": "Group",
           "config": {
-            "label": "Featured Blocks",
+            "label": "Featured Items",
             "repeat": true,
             "fields": {
-              "featured_block": {
+              "featured_item": {
                 "type": "Link",
                 "config": {
-                  "label": "Featured Block",
+                  "label": "Featured Item",
                   "select": "document",
                   "customtypes": [
-                    "featured_block"
+                    "feature"
                   ]
                 }
               }

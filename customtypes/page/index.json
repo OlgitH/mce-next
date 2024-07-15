@@ -22,12 +22,13 @@
           "single": "heading1"
         }
       },
+
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "featured_section": {
+            "feature_area": {
               "type": "SharedSlice"
             },
             "tour_section": {
@@ -64,6 +65,25 @@
             "height": 1260
           },
           "thumbnails": []
+        }
+      }
+    },
+    "Page Sections": {
+      "page_sections": {
+        "type": "Group",
+        "config": {
+          "label": "Page Sections",
+          "repeat": true,
+          "fields": {
+            "page_section": {
+              "type": "Link",
+              "config": {
+                "label": "Page Section",
+                "select": "document",
+                "customtypes": ["page_section"]
+              }
+            }
+          }
         }
       }
     }

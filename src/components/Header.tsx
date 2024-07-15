@@ -3,15 +3,19 @@ import * as prismic from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { usePathname } from "next/navigation";
-
-import { Bounded } from "./Bounded";
-
-const localeLabels = {
+import { Locale, Navigation, Settings } from "@/app/types";
+const localeLabels: { [key: string]: string } = {
   "en-gb": "EN",
   "es-co": "ES",
 };
 
-export function Header({ locales = [], navigation, settings }) {
+type Props = {
+  locales: Locale[];
+  navigation: Navigation;
+  settings: Settings;
+};
+
+export default function Header({ locales = [], navigation, settings }: Props) {
   const pathname = usePathname();
 
   return (
@@ -22,16 +26,16 @@ export function Header({ locales = [], navigation, settings }) {
           {prismic.isFilled.image(settings.data.logo) && (
             <PrismicNextImage
               field={settings.data.logo}
-              alt={settings.data.logo.alt}
+              alt={(settings.data.logo.alt as any) ?? ""}
               width="140"
             />
           )}
         </PrismicNextLink>
         <nav className="flex flex-wrap items-center gap-x-6 gap-y-3 md:gap-x-10">
           <ul className="flex flex-wrap gap-6 md:gap-10">
-            {navigation.data?.links.map((item) => (
+            {navigation.data?.links.map((item, index) => (
               <li
-                key={prismic.asText(item.label)}
+                key={index}
                 className="font-semibold tracking-tight text-slate-800"
               >
                 <PrismicNextLink field={item.link}>
@@ -41,7 +45,7 @@ export function Header({ locales = [], navigation, settings }) {
             ))}
           </ul>
           <div className="flex flex-wrap gap-3">
-            <span aria-hidden={true}>🌐</span>
+            <span aria-hidden="true">🌐</span>
             <ul className="flex flex-wrap gap-3">
               {locales.map((locale) => (
                 <li key={locale.lang} className="first:font-semibold">

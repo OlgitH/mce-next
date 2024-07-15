@@ -1,9 +1,9 @@
 {
-  "name": "nextjs-starter-prismic-multi-language",
+  "name": "mce-next",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
-  "author": "Prismic <contact@prismic.io> (https://prismic.io)",
+  "author": "info@aquicreative.com",
   "scripts": {
     "dev": "concurrently \"npm:next:dev\" \"npm:slicemachine\" --names \"next,slicemachine\" --prefix-colors blue,magenta",
     "next:dev": "next",
@@ -22,6 +22,7 @@
     "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
     "sass": "^1.77.6"
   },
   "devDependencies": {

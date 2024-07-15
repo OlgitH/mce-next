@@ -34,7 +34,10 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
         src={slice.primary.background_image}
         height={300}
         bgColour={bgColourField.data ? bgColourField.data.colour_code : ""}
-        opacity={slice.primary.opacity}
+        opacity={
+          (slice.primary.opacity && parseInt(slice.primary.opacity)) ??
+          undefined
+        }
       >
         <PrismicRichText
           field={slice.primary.inner_text}

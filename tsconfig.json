@@ -31,7 +31,10 @@
     "**/*.tsx",
     "next.config.js",
     ".next/types/**/*.ts",
-    "./prismicio-types.d.ts"
+    "./prismicio-types.d.ts",
+    "src/app/[lang]/[uid]/page.js",
+    "src/app/[lang]/tours/[uid]/page.js",
+    "src/app/[lang]/[uid]/page.js"
   ],
   "exclude": ["node_modules"]
 }

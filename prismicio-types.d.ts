@@ -36,6 +36,53 @@ export type BrandColourDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for Category documents
+ */
+interface CategoryDocumentData {
+  /**
+   * Name field in *Category*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+}
+
+/**
+ * Category document from Prismic
+ *
+ * - **API ID**: `category`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CategoryDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CategoryDocumentData>,
+    "category",
+    Lang
+  >;
+
+/**
+ * Item in *Feature → Categories*
+ */
+export interface FeatureDocumentDataCategoriesItem {
+  /**
+   * Category field in *Feature → Categories*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature.categories[].category
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  category: prismic.ContentRelationshipField<"category">;
+}
+
 type FeatureDocumentDataSlicesSlice = never;
 
 /**
@@ -65,7 +112,18 @@ interface FeatureDocumentData {
   text: prismic.RichTextField;
 
   /**
-   * `slices` field in *Feature*
+   * Categories field in *Feature*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature.categories[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  categories: prismic.GroupField<Simplify<FeatureDocumentDataCategoriesItem>>;
+
+  /**
+   * Slice Zone field in *Feature*
    *
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
@@ -120,51 +178,6 @@ export type FeatureDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<FeatureDocumentData>,
     "feature",
-    Lang
-  >;
-
-type FeaturedBlockDocumentDataSlicesSlice = FeaturedBlockSlice;
-
-/**
- * Content for Featured Block documents
- */
-interface FeaturedBlockDocumentData {
-  /**
-   * Title field in *Featured Block*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_block.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  title: prismic.RichTextField;
-
-  /**
-   * Slice Zone field in *Featured Block*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_block.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#slices
-   */
-  slices: prismic.SliceZone<FeaturedBlockDocumentDataSlicesSlice>;
-}
-
-/**
- * Featured Block document from Prismic
- *
- * - **API ID**: `featured_block`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/custom-types
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type FeaturedBlockDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<FeaturedBlockDocumentData>,
-    "featured_block",
     Lang
   >;
 
@@ -225,8 +238,23 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Item in *Page → Page Sections*
+ */
+export interface PageDocumentDataPageSectionsItem {
+  /**
+   * Page Section field in *Page → Page Sections*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page.page_sections[].page_section
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  page_section: prismic.ContentRelationshipField<"page_section">;
+}
+
 type PageDocumentDataSlicesSlice =
-  | FeaturedSectionSlice
+  | FeatureAreaSlice
   | TourSectionSlice
   | BannerSlice;
 
@@ -244,6 +272,17 @@ interface PageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   title: prismic.TitleField;
+
+  /**
+   * Page Sections field in *Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page.page_sections[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  page_sections: prismic.GroupField<Simplify<PageDocumentDataPageSectionsItem>>;
 
   /**
    * Slice Zone field in *Page*
@@ -299,6 +338,55 @@ interface PageDocumentData {
  */
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+
+type PageSectionDocumentDataSlicesSlice =
+  | TourSectionSlice
+  | TextSectionSlice
+  | FeatureListSlice
+  | BannerSlice;
+
+/**
+ * Content for Page Section documents
+ */
+interface PageSectionDocumentData {
+  /**
+   * Background colour field in *Page Section*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page_section.background_colour
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_colour: prismic.ContentRelationshipField<"brand_colour">;
+
+  /**
+   * Slice Zone field in *Page Section*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page_section.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<PageSectionDocumentDataSlicesSlice>;
+}
+
+/**
+ * Page Section document from Prismic
+ *
+ * - **API ID**: `page_section`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PageSectionDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PageSectionDocumentData>,
+    "page_section",
+    Lang
+  >;
 
 /**
  * Content for Settings documents
@@ -474,10 +562,11 @@ export type TourDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | BrandColourDocument
+  | CategoryDocument
   | FeatureDocument
-  | FeaturedBlockDocument
   | NavigationDocument
   | PageDocument
+  | PageSectionDocument
   | SettingsDocument
   | TourDocument;
 
@@ -556,147 +645,111 @@ type BannerSliceVariation = BannerSliceDefault;
 export type BannerSlice = prismic.SharedSlice<"banner", BannerSliceVariation>;
 
 /**
- * Item in *FeaturedBlock → Default → Primary → Featured Items*
+ * Primary content in *FeatureSection → Default → Primary*
  */
-export interface FeaturedBlockSliceDefaultPrimaryFeaturedItemsItem {
+export interface FeatureAreaSliceDefaultPrimary {
   /**
-   * Featured field in *FeaturedBlock → Default → Primary → Featured Items*
+   * Type field in *FeatureSection → Default → Primary*
    *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_block.default.primary.featured_items[].featured
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   * - **Field Type**: Select
+   * - **Placeholder**: Choose from the dropdown
+   * - **Default Value**: London
+   * - **API ID Path**: feature_area.default.primary.type
+   * - **Documentation**: https://prismic.io/docs/field#select
    */
-  featured: prismic.ContentRelationshipField<"feature">;
+  type: prismic.SelectField<"London" | "Colombia", "filled">;
 }
 
 /**
- * Primary content in *FeaturedBlock → Default → Primary*
+ * Default variation for FeatureSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
  */
-export interface FeaturedBlockSliceDefaultPrimary {
-  /**
-   * Title field in *FeaturedBlock → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_block.default.primary.title
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  title: prismic.RichTextField;
+export type FeatureAreaSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FeatureAreaSliceDefaultPrimary>,
+  never
+>;
 
+/**
+ * Slice variation for *FeatureSection*
+ */
+type FeatureAreaSliceVariation = FeatureAreaSliceDefault;
+
+/**
+ * FeatureSection Shared Slice
+ *
+ * - **API ID**: `feature_area`
+ * - **Description**: FeatureArea
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FeatureAreaSlice = prismic.SharedSlice<
+  "feature_area",
+  FeatureAreaSliceVariation
+>;
+
+/**
+ * Item in *FeatureList → Default → Primary → Featured Items*
+ */
+export interface FeatureListSliceDefaultPrimaryFeaturedItemsItem {
   /**
-   * Featured Items field in *FeaturedBlock → Default → Primary*
+   * Featured Item field in *FeatureList → Default → Primary → Featured Items*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_list.default.primary.featured_items[].featured_item
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  featured_item: prismic.ContentRelationshipField<"feature">;
+}
+
+/**
+ * Primary content in *FeatureList → Default → Primary*
+ */
+export interface FeatureListSliceDefaultPrimary {
+  /**
+   * Featured Items field in *FeatureList → Default → Primary*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: featured_block.default.primary.featured_items[]
+   * - **API ID Path**: feature_list.default.primary.featured_items[]
    * - **Documentation**: https://prismic.io/docs/field#group
    */
   featured_items: prismic.GroupField<
-    Simplify<FeaturedBlockSliceDefaultPrimaryFeaturedItemsItem>
+    Simplify<FeatureListSliceDefaultPrimaryFeaturedItemsItem>
   >;
 }
 
 /**
- * Default variation for FeaturedBlock Slice
+ * Default variation for FeatureList Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type FeaturedBlockSliceDefault = prismic.SharedSliceVariation<
+export type FeatureListSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Simplify<FeaturedBlockSliceDefaultPrimary>,
+  Simplify<FeatureListSliceDefaultPrimary>,
   never
 >;
 
 /**
- * Slice variation for *FeaturedBlock*
+ * Slice variation for *FeatureList*
  */
-type FeaturedBlockSliceVariation = FeaturedBlockSliceDefault;
+type FeatureListSliceVariation = FeatureListSliceDefault;
 
 /**
- * FeaturedBlock Shared Slice
+ * FeatureList Shared Slice
  *
- * - **API ID**: `featured_block`
- * - **Description**: FeaturedBlock
+ * - **API ID**: `feature_list`
+ * - **Description**: FeatureList
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type FeaturedBlockSlice = prismic.SharedSlice<
-  "featured_block",
-  FeaturedBlockSliceVariation
->;
-
-/**
- * Item in *FeaturedSection → Default → Primary → Featured Blocks*
- */
-export interface FeaturedSectionSliceDefaultPrimaryFeaturedBlocksItem {
-  /**
-   * Featured Block field in *FeaturedSection → Default → Primary → Featured Blocks*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_section.default.primary.featured_blocks[].featured_block
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
-   */
-  featured_block: prismic.ContentRelationshipField<"featured_block">;
-}
-
-/**
- * Primary content in *FeaturedSection → Default → Primary*
- */
-export interface FeaturedSectionSliceDefaultPrimary {
-  /**
-   * Title field in *FeaturedSection → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_section.default.primary.title
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Featured Blocks field in *FeaturedSection → Default → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: featured_section.default.primary.featured_blocks[]
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  featured_blocks: prismic.GroupField<
-    Simplify<FeaturedSectionSliceDefaultPrimaryFeaturedBlocksItem>
-  >;
-}
-
-/**
- * Default variation for FeaturedSection Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type FeaturedSectionSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<FeaturedSectionSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Slice variation for *FeaturedSection*
- */
-type FeaturedSectionSliceVariation = FeaturedSectionSliceDefault;
-
-/**
- * FeaturedSection Shared Slice
- *
- * - **API ID**: `featured_section`
- * - **Description**: FeaturedSection
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type FeaturedSectionSlice = prismic.SharedSlice<
-  "featured_section",
-  FeaturedSectionSliceVariation
+export type FeatureListSlice = prismic.SharedSlice<
+  "feature_list",
+  FeatureListSliceVariation
 >;
 
 /**
@@ -1195,18 +1248,22 @@ declare module "@prismicio/client" {
     export type {
       BrandColourDocument,
       BrandColourDocumentData,
+      CategoryDocument,
+      CategoryDocumentData,
       FeatureDocument,
       FeatureDocumentData,
+      FeatureDocumentDataCategoriesItem,
       FeatureDocumentDataSlicesSlice,
-      FeaturedBlockDocument,
-      FeaturedBlockDocumentData,
-      FeaturedBlockDocumentDataSlicesSlice,
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
       PageDocument,
       PageDocumentData,
+      PageDocumentDataPageSectionsItem,
       PageDocumentDataSlicesSlice,
+      PageSectionDocument,
+      PageSectionDocumentData,
+      PageSectionDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
       TourDocument,
@@ -1217,16 +1274,15 @@ declare module "@prismicio/client" {
       BannerSliceDefaultPrimary,
       BannerSliceVariation,
       BannerSliceDefault,
-      FeaturedBlockSlice,
-      FeaturedBlockSliceDefaultPrimaryFeaturedItemsItem,
-      FeaturedBlockSliceDefaultPrimary,
-      FeaturedBlockSliceVariation,
-      FeaturedBlockSliceDefault,
-      FeaturedSectionSlice,
-      FeaturedSectionSliceDefaultPrimaryFeaturedBlocksItem,
-      FeaturedSectionSliceDefaultPrimary,
-      FeaturedSectionSliceVariation,
-      FeaturedSectionSliceDefault,
+      FeatureAreaSlice,
+      FeatureAreaSliceDefaultPrimary,
+      FeatureAreaSliceVariation,
+      FeatureAreaSliceDefault,
+      FeatureListSlice,
+      FeatureListSliceDefaultPrimaryFeaturedItemsItem,
+      FeatureListSliceDefaultPrimary,
+      FeatureListSliceVariation,
+      FeatureListSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceWithButtonPrimary,

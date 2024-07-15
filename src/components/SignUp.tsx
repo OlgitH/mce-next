@@ -1,34 +1,28 @@
 import { PrismicText } from "@prismicio/react";
 import { PrismicNextLink } from "@prismicio/next";
 import * as prismic from "@prismicio/client";
-
-import { Bounded } from "./Bounded";
-import { Heading } from "./Heading";
 import { PrismicRichText } from "./PrismicRichText";
+import { Settings } from "@/app/types";
 
-function SignUpForm({ settings }) {
+export default function SignUpForm({ settings }: { settings: Settings }) {
   return (
-    <div className="px-4">
+    <div className="py-20 bg-neutral-100 flex justify-center">
       <form
         action="/api/sign-up"
         method="post"
         className="grid w-full max-w-xl grid-cols-1 gap-6"
       >
         {prismic.isFilled.richText(settings.data.newsletterDisclaimer) && (
-          <div className="text-center tracking-tight text-slate-300">
+          <div className="text-center tracking-tight text-black">
             <PrismicRichText
               field={settings.data.newsletterDescription}
               components={{
-                heading1: ({ children }) => (
-                  <Heading
-                    as="h2"
-                    size="6xl"
-                    className="mb-4 text-white last:mb-0"
-                  >
+                heading1: ({ children }: { children: React.ReactNode }) => (
+                  <h1 className="mb-4 text-black-900 last:mb-0 text-6xl">
                     {children}
-                  </Heading>
+                  </h1>
                 ),
-                paragraph: ({ children }) => (
+                paragraph: ({ children }: { children: React.ReactNode }) => (
                   <p className="mb-4 last:mb-0">{children}</p>
                 ),
               }}
@@ -56,28 +50,12 @@ function SignUpForm({ settings }) {
             </button>
           </div>
           {prismic.isFilled.richText(settings.data.newsletterDisclaimer) && (
-            <p className="text-center text-xs text-slate-400">
+            <p className="text-center text-xs">
               <PrismicText field={settings.data.newsletterDisclaimer} />
             </p>
           )}
         </div>
       </form>
     </div>
-  );
-}
-
-export function Footer({ settings }) {
-  return (
-    <Bounded as="footer" className="bg-gray-800 pb-12 text-slate-300 md:pb-12">
-      <div className="grid grid-cols-1 justify-items-center gap-20 md:gap-24">
-        <SignUpForm settings={settings} />
-        <div className="mx-auto w-full max-w-3xl text-center text-xs font-semibold tracking-tight">
-          Proudly published using{" "}
-          <PrismicNextLink href="https://prismic.io" className="text-white">
-            Prismic
-          </PrismicNextLink>
-        </div>
-      </div>
-    </Bounded>
   );
 }

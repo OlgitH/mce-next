@@ -1,0 +1,28 @@
+{
+  "id": "feature_area",
+  "type": "SharedSlice",
+  "name": "FeatureSection",
+  "description": "FeatureArea",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "type": {
+          "type": "Select",
+          "config": {
+            "label": "Type",
+            "placeholder": "Choose from the dropdown",
+            "options": ["London", "Colombia"],
+            "default_value": "London"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

@@ -1,16 +1,16 @@
 import { SliceZone } from "@prismicio/react";
 import * as prismic from "@prismicio/client";
-
 import { getLocales } from "@/lib/getLocales";
 import { createClient } from "@/prismicio";
-
+import { Metadata } from "next";
 import { Layout } from "@/components/Layout";
 import { components } from "@/slices";
 
-/**
- * @returns {Promise<import("next").Metadata>}
- */
-export async function generateMetadata({ params: { lang } }) {
+export async function generateMetadata({
+  params: { uid, lang },
+}: {
+  params: { uid: string; lang: string };
+}): Promise<Metadata> {
   const client = createClient();
   const page = await client.getByUID("page", "homepage", { lang });
 
@@ -19,14 +19,20 @@ export async function generateMetadata({ params: { lang } }) {
   };
 }
 
-export default async function Page({ params: { lang } }) {
+export default async function Index({
+  params: { lang },
+}: {
+  params: { lang: string };
+}) {
   const client = createClient();
+
+  const features = await client.getAllByType("feature", { lang });
 
   const page = await client.getByUID("page", "homepage", {
     lang,
     graphQuery: `{
       page {
-     
+        
         slices {
 
           ...on banner {
@@ -49,6 +55,11 @@ export default async function Page({ params: { lang } }) {
               ...on default {
                 primary {
                   ...primaryFields
+                  background_colour {
+                    ...on brand_colour {
+                      colour_code
+                    }
+                  }
                   tours {
                     tour {
                       ...tourFields
@@ -64,42 +75,18 @@ export default async function Page({ params: { lang } }) {
             }
           }
 
-          ... on featured_section {
+      
+          ... on feature_area {
             variation {
               ...on default {
                 primary {
-                  ...primaryFields
-                  featured_blocks {
-                    featured_block {
-                      ...featured_blockFields
-                      slices {
-                        ...on featured_block {
-                          variation {
-                            ...on default {
-                              primary {
-                                ...primaryFields
-                                featured_items {
-                                  featured {
-                                    ...featuredFields
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  type
                 }
               }
             }
           }
-
-      
-
-         
-
-          
+        
+  
         }
       }
     }`,
@@ -111,7 +98,11 @@ export default async function Page({ params: { lang } }) {
 
   return (
     <Layout locales={locales} navigation={navigation} settings={settings}>
-      <SliceZone slices={page.data.slices} components={components} />
+      <SliceZone
+        slices={page.data.slices}
+        components={components}
+        context={{ features }}
+      />
     </Layout>
   );
 }

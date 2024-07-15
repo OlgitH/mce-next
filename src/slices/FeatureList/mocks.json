@@ -3,14 +3,14 @@
 		"__TYPE__": "SharedSliceContent",
 		"variation": "default",
 		"primary": {
-			"featured_blocks": {
+			"featured_items": {
 				"__TYPE__": "GroupContentType",
 				"value": [
 					{
 						"__TYPE__": "GroupItemContent",
 						"value": [
 							[
-								"featured_block",
+								"featured_item",
 								{
 									"__TYPE__": "LinkContent",
 									"value": {
@@ -22,11 +22,6 @@
 						]
 					}
 				]
-			},
-			"title": {
-				"__TYPE__": "FieldContent",
-				"value": "slowly",
-				"type": "Text"
 			}
 		},
 		"items": []

@@ -11,10 +11,11 @@ const inter = Inter({
   display: "swap",
 });
 
-/**
- * @param {{ children: React.ReactNode }}
- */
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={clsx(inter.className)}>
       <body className="overflow-x-hidden antialiased">

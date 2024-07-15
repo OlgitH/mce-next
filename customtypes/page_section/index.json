@@ -1,0 +1,45 @@
+{
+  "format": "custom",
+  "id": "page_section",
+  "label": "Page Section",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "background_colour": {
+        "type": "Link",
+        "config": {
+          "label": "Background colour",
+          "select": "document",
+          "customtypes": ["brand_colour"]
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "tour_section": {
+              "type": "SharedSlice"
+            },
+            "text_section": {
+              "type": "SharedSlice"
+            },
+            "feature_list": {
+              "type": "SharedSlice"
+            },
+            "banner": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}
