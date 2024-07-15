@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-black text-cream">
+    <section className="bg-black text-cream">
       <div className="container">
         <div className="py-28 flex flex-col items-center w-full">
           <h3 className="">
@@ -15,6 +15,6 @@ export default function Footer() {
           </a>
         </div>
       </div>
-    </footer>
+    </section>
   );
 }
