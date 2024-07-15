@@ -1,4 +1,3 @@
-import { PrismicText } from "@prismicio/react";
 import { PrismicNextLink } from "@prismicio/next";
 import * as prismic from "@prismicio/client";
 

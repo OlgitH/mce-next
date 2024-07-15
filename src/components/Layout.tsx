@@ -1,7 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import Socials from "./Socials";
-import { Content } from "@prismicio/client";
 
 type Props = {
   locales: any;
