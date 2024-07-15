@@ -1,6 +1,3 @@
-import { PrismicNextLink } from "@prismicio/next";
-import * as prismic from "@prismicio/client";
-
 export default function Footer() {
   return (
     <footer className="bg-black text-cream">
