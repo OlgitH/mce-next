@@ -16,6 +16,7 @@ export const repositoryName =
  *
  * @type {prismic.ClientConfig["routes"]}
  */
+
 export const routes = [
   {
     type: "page",
