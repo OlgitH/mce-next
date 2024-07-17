@@ -1,6 +1,6 @@
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
-import FeatureList from "@/components/FeatureList";
+import FeatureList from "@/components/feature-list";
 
 /**
  * Props for `FeatureSection`.

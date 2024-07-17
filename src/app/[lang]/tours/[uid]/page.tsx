@@ -3,7 +3,7 @@ import * as prismic from "@prismicio/client";
 import { Metadata } from "next";
 import { getLocales } from "@/lib/getLocales";
 import { createClient } from "@/prismicio";
-import { Layout } from "@/components/Layout";
+import { Layout } from "@/components/layout";
 import { components } from "@/slices";
 
 export async function generateMetadata({
