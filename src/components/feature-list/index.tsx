@@ -21,11 +21,12 @@ const FeatureListComponent = ({ features }: Props) => {
               className="text-center flex flex-col items-center sm:flex-1 grow"
             >
               {feature.data.image ? (
-                <PrismicNextImage
-                  field={feature.data.image}
-                  className=""
-                  width="100"
-                />
+                <div className="rounded-full bg-green p-4 w-[140px] h-[140px] flex justify-center items-center">
+                  <PrismicNextImage
+                    field={feature.data.image}
+                    className="w-[80%]"
+                  />
+                </div>
               ) : (
                 ""
               )}

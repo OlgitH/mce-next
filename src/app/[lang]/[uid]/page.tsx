@@ -6,6 +6,7 @@ import { createClient } from "@/prismicio";
 import { Layout } from "@/components/layout";
 import { components } from "@/slices";
 import { PageSectionField } from "@/app/types";
+import PageSection from "@/components/page-section";
 
 export async function generateMetadata({
   params: { uid, lang },
@@ -170,19 +171,17 @@ export default async function Page({
         page.data.page_sections.map((item, i) => {
           const pageSectionField = item.page_section as PageSectionField;
           return (
-            <section
+            <PageSection
               key={i}
-              style={{
-                backgroundColor:
-                  pageSectionField.data?.background_colour.data.colour_code ??
-                  "",
-              }}
+              bgColour={
+                pageSectionField.data?.background_colour.data.colour_code ?? ""
+              }
             >
               <SliceZone
                 slices={pageSectionField.data?.slices}
                 components={components}
               />
-            </section>
+            </PageSection>
           );
         })}
     </Layout>
