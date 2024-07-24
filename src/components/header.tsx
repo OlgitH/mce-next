@@ -4,6 +4,7 @@ import { PrismicText } from "@prismicio/react";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { usePathname } from "next/navigation";
 import { Locale, Navigation, Settings } from "@/app/types";
+import Link from "next/link";
 const localeLabels: { [key: string]: string } = {
   "en-gb": "EN",
   "es-co": "ES",
@@ -21,7 +22,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
   return (
     <header className="py-4">
       <div className="container px-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 leading-none">
-        <PrismicNextLink href="/">
+        <PrismicNextLink field={navigation.data?.links[0].link}>
           <span className="sr-only">Go to homepage</span>
           {prismic.isFilled.image(settings.data.logo) && (
             <PrismicNextImage
