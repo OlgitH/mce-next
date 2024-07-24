@@ -44,10 +44,10 @@ const TourSection = ({ slice }: TourSectionProps): JSX.Element => {
         backgroundColor: bgColourField.data?.colour_code,
       }}
     >
-      <div className="container flex flex-col justify-center">
+      <div className="container px-4 flex flex-col justify-center">
         <h2>{slice.primary.title}</h2>
 
-        <div className="tour-wrap grid grid-cols-3 auto-rows-auto gap-4">
+        <div className="tour-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-auto gap-4">
           {slice.primary.tours &&
             slice.primary.tours.map((item, i) => {
               const tourField = item.tour as TourField;

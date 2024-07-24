@@ -708,6 +708,16 @@ export interface FeatureListSliceDefaultPrimaryFeaturedItemsItem {
  */
 export interface FeatureListSliceDefaultPrimary {
   /**
+   * Title field in *FeatureList → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_list.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
    * Featured Items field in *FeatureList → Default → Primary*
    *
    * - **Field Type**: Group

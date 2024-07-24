@@ -22,6 +22,17 @@
 						]
 					}
 				]
+			},
+			"title": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Excepteur qui excepteur incididunt. Laboris aliqua incididunt magna ut proident elit."
+						}
+					}
+				]
 			}
 		},
 		"items": []

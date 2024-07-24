@@ -39,19 +39,19 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
           undefined
         }
       >
-        <PrismicRichText
-          field={slice.primary.inner_text}
-          components={{
-            heading1: ({ children }: { children: React.ReactNode }) => (
-              <h1 className="text-[2.6rem] mb-6 last:mb-0 font-bold">
-                {children}
-              </h1>
-            ),
-            paragraph: ({ children }: { children: React.ReactNode }) => (
-              <p className="text-xl mb-6 last:mb-0 font-normal">{children}</p>
-            ),
-          }}
-        />
+        <div className="container px-4">
+          <PrismicRichText
+            field={slice.primary.inner_text}
+            components={{
+              heading1: ({ children }: { children: React.ReactNode }) => (
+                <h1 className="text-[2.6rem] mb-20 font-bold">{children}</h1>
+              ),
+              paragraph: ({ children }: { children: React.ReactNode }) => (
+                <p className="text-xl mb-6 last:mb-0 font-normal">{children}</p>
+              ),
+            }}
+          />
+        </div>
       </CoverImage>
     </section>
   );

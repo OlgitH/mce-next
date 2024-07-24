@@ -89,6 +89,7 @@ export default async function Index({
                   variation {
                     ...on default {
                       primary {
+                        ...primaryFields
                         featured_items {
                           featured_item {
                             ...featured_itemFields
@@ -184,6 +185,7 @@ export default async function Index({
                   pageSectionField.data?.background_colour.data.colour_code ??
                   "",
               }}
+              className="py-20"
             >
               <SliceZone
                 slices={pageSectionField.data?.slices}

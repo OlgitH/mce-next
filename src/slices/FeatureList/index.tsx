@@ -1,6 +1,7 @@
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import FeatureListComponent from "@/components/feature-list";
+import { PrismicRichText } from "@/components/PrismicRichText";
 /**
  * Props for `FeatureList`.
  */
@@ -18,9 +19,23 @@ const FeatureList = ({ slice }: FeatureListProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="py-20"
+      className="pb-20"
     >
-      <div className="container">
+      <div className="container px-4">
+        {slice.primary.title && (
+          <PrismicRichText
+            field={slice.primary.title}
+            components={{
+              heading2: ({ children }: { children: React.ReactNode }) => (
+                <h2 className="mb-8">{children}</h2>
+              ),
+              paragraph: ({ children }: { children: React.ReactNode }) => (
+                <p>{children}</p>
+              ),
+            }}
+          />
+        )}
+
         <FeatureListComponent features={featuredItems} />
       </div>
     </section>
