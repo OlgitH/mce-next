@@ -32,7 +32,6 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
     >
       <CoverImage
         src={slice.primary.background_image}
-        height={300}
         bgColour={bgColourField.data ? bgColourField.data.colour_code : ""}
         opacity={
           (slice.primary.opacity && parseInt(slice.primary.opacity)) ??
@@ -44,7 +43,9 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
             field={slice.primary.inner_text}
             components={{
               heading1: ({ children }: { children: React.ReactNode }) => (
-                <h1 className="text-[2.6rem] mb-20 font-bold">{children}</h1>
+                <h1 className="md:text-3xl mb-10 md:mb-20 font-bold">
+                  {children}
+                </h1>
               ),
               paragraph: ({ children }: { children: React.ReactNode }) => (
                 <p className="text-xl mb-6 last:mb-0 font-normal">{children}</p>

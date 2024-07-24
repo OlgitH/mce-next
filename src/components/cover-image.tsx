@@ -30,8 +30,8 @@ const CoverImage = ({
   return (
     <>
       <div
-        className="sm:mx-0 relative z-0 w-full"
-        style={{ height: height + "px" ?? "240px" }}
+        className="sm:mx-0 relative z-0 w-full min-h-[300px]"
+        style={{ height: height ? height + "px" : "" }}
       >
         {slug ? (
           <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
