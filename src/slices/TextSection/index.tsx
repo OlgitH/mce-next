@@ -30,10 +30,12 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
       style={{
         backgroundColor: bgColourField.data?.colour_code ?? "",
         color: colourField.data?.colour_code ?? "",
+        paddingTop: slice.primary.padding_y ?? 0,
+        paddingBottom: slice.primary.padding_y ?? 0,
       }}
       className=""
     >
-      <div className="container py-20">
+      <div className="container">
         {" "}
         <PrismicRichText
           field={slice.primary.text}

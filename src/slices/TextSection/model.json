@@ -18,7 +18,7 @@
             "label": "Text",
             "placeholder": "",
             "allowTargetBlank": true,
-            "multi": "paragraph,heading3,strong,em"
+            "multi": "paragraph,heading3,strong,em,heading2,heading1"
           }
         },
         "background_colour": {
@@ -39,6 +39,13 @@
             "customtypes": [
               "brand_colour"
             ]
+          }
+        },
+        "padding_y": {
+          "type": "Number",
+          "config": {
+            "label": "PaddingY",
+            "placeholder": ""
           }
         }
       },

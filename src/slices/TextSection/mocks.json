@@ -9,7 +9,7 @@
 					{
 						"type": "paragraph",
 						"content": {
-							"text": "Cupidatat Lorem proident exercitation laboris excepteur. Excepteur anim excepteur proident minim proident ex cillum eu commodo velit laborum magna ut. Eiusmod occaecat aute nulla commodo ad."
+							"text": "Cillum elit fugiat labore mollit id irure ut ea velit ad nulla tempor ad reprehenderit veniam. Elit id Lorem adipisicing anim veniam aute. Ad tempor ad ex nisi ipsum nisi nulla anim anim magna labore esse sunt cupidatat."
 						}
 					}
 				]
@@ -27,6 +27,11 @@
 					"__TYPE__": "DocumentLink",
 					"id": "mock_document_id"
 				}
+			},
+			"padding_y": {
+				"__TYPE__": "FieldContent",
+				"value": "92",
+				"type": "Number"
 			}
 		},
 		"items": []

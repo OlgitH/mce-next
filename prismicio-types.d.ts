@@ -238,6 +238,11 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
+type PageDocumentDataSlicesSlice =
+  | FeatureAreaSlice
+  | TourSectionSlice
+  | BannerSlice;
+
 /**
  * Item in *Page → Page Sections*
  */
@@ -253,11 +258,6 @@ export interface PageDocumentDataPageSectionsItem {
   page_section: prismic.ContentRelationshipField<"page_section">;
 }
 
-type PageDocumentDataSlicesSlice =
-  | FeatureAreaSlice
-  | TourSectionSlice
-  | BannerSlice;
-
 /**
  * Content for Page documents
  */
@@ -272,17 +272,6 @@ interface PageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   title: prismic.TitleField;
-
-  /**
-   * Page Sections field in *Page*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.page_sections[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  page_sections: prismic.GroupField<Simplify<PageDocumentDataPageSectionsItem>>;
 
   /**
    * Slice Zone field in *Page*
@@ -324,7 +313,16 @@ interface PageDocumentData {
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#image
    */
-  meta_image: prismic.ImageField<never>;
+  meta_image: prismic.ImageField<never> /**
+   * Page Sections field in *Page*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page.page_sections[]
+   * - **Tab**: Page Sections
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */;
+  page_sections: prismic.GroupField<Simplify<PageDocumentDataPageSectionsItem>>;
 }
 
 /**
@@ -987,6 +985,16 @@ export interface TextSectionSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
   text_colour: prismic.ContentRelationshipField<"brand_colour">;
+
+  /**
+   * PaddingY field in *TextSection → Default → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.default.primary.padding_y
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  padding_y: prismic.NumberField;
 }
 
 /**
@@ -1259,8 +1267,8 @@ declare module "@prismicio/client" {
       NavigationDocumentDataLinksItem,
       PageDocument,
       PageDocumentData,
-      PageDocumentDataPageSectionsItem,
       PageDocumentDataSlicesSlice,
+      PageDocumentDataPageSectionsItem,
       PageSectionDocument,
       PageSectionDocumentData,
       PageSectionDocumentDataSlicesSlice,

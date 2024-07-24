@@ -41,6 +41,16 @@ export default async function Page({
             }
             slices {
 
+              ... on text_section {
+                  variation {
+                    ...on default {
+                      primary {
+                        ...primaryFields
+                      }
+                    }
+                  }
+              }
+
               ... on tour_section {
                   variation {
                     ...on default {

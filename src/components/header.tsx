@@ -19,7 +19,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
   const pathname = usePathname();
 
   return (
-    <header>
+    <header className="py-4">
       <div className="container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 leading-none">
         <PrismicNextLink href="/">
           <span className="sr-only">Go to homepage</span>

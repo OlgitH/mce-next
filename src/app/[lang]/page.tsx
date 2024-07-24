@@ -5,6 +5,7 @@ import { createClient } from "@/prismicio";
 import { Metadata } from "next";
 import { Layout } from "@/components/layout";
 import { components } from "@/slices";
+import { PageSectionField } from "@/app/types";
 
 export async function generateMetadata({
   params: { uid, lang },
@@ -32,7 +33,75 @@ export default async function Index({
     lang,
     graphQuery: `{
       page {
-        
+
+        page_sections {
+          page_section {
+            ...page_sectionFields
+            background_colour {
+              ...on brand_colour {
+                colour_code
+              }
+            }
+            slices {
+
+              ... on tour_section {
+                  variation {
+                    ...on default {
+                      primary {
+                        ...primaryFields
+                        tours {
+                          tour {
+                            ...tourFields
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+              
+              ...on banner {
+                  variation {
+                    ...on default {
+                      primary {
+                        ...primaryFields
+                        background_colour {
+                          ...on brand_colour {
+                            colour_code
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+                ... on text_section {
+                  variation {
+                    ...on default {
+                      primary {
+                        ...primaryFields
+                      }
+                    }
+                  }
+                }
+
+                ... on feature_list {
+                  variation {
+                    ...on default {
+                      primary {
+                        featured_items {
+                          featured_item {
+                            ...featured_itemFields
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+            }
+          }
+        }
         slices {
 
           ...on banner {
@@ -103,6 +172,26 @@ export default async function Index({
         components={components}
         context={{ features }}
       />
+      {/* Page sections */}
+      {page.data.page_sections &&
+        page.data.page_sections.map((item, i) => {
+          const pageSectionField = item.page_section as PageSectionField;
+          return (
+            <section
+              key={i}
+              style={{
+                backgroundColor:
+                  pageSectionField.data?.background_colour.data.colour_code ??
+                  "",
+              }}
+            >
+              <SliceZone
+                slices={pageSectionField.data?.slices}
+                components={components}
+              />
+            </section>
+          );
+        })}
     </Layout>
   );
 }
