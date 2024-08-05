@@ -43,7 +43,7 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
             field={slice.primary.inner_text}
             components={{
               heading1: ({ children }: { children: React.ReactNode }) => (
-                <h1 className="md:text-3xl mb-10 md:mb-20 font-bold">
+                <h1 className="coffee-heading md:text-3xl mb-10 md:mb-20 font-bold">
                   {children}
                 </h1>
               ),

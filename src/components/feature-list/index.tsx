@@ -32,7 +32,7 @@ const FeatureListComponent = ({ features }: Props) => {
               )}
 
               {feature.data.title && (
-                <h3 className="text-bold text-xl mt-4">
+                <h3 className="text-xl mt-4">
                   {prismic.asText(feature.data.featured_title)}
                 </h3>
               )}

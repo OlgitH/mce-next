@@ -19,7 +19,7 @@ const FeatureList = ({ slice }: FeatureListProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="pb-20"
+      className="py-20"
     >
       <div className="container px-4">
         {slice.primary.title && (
@@ -27,7 +27,7 @@ const FeatureList = ({ slice }: FeatureListProps): JSX.Element => {
             field={slice.primary.title}
             components={{
               heading2: ({ children }: { children: React.ReactNode }) => (
-                <h2 className="mb-8">{children}</h2>
+                <h2 className="font-[700] mb-8">{children}</h2>
               ),
               paragraph: ({ children }: { children: React.ReactNode }) => (
                 <p>{children}</p>

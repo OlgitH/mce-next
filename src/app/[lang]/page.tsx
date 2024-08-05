@@ -37,6 +37,7 @@ export default async function Index({
         page_sections {
           page_section {
             ...page_sectionFields
+            padding_y
             background_colour {
               ...on brand_colour {
                 colour_code
@@ -176,6 +177,8 @@ export default async function Index({
       {/* Page sections */}
       {page.data.page_sections &&
         page.data.page_sections.map((item, i) => {
+          console.log("PS: ", item);
+
           const pageSectionField = item.page_section as PageSectionField;
           return (
             <PageSection

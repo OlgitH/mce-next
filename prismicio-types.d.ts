@@ -359,6 +359,17 @@ interface PageSectionDocumentData {
   background_colour: prismic.ContentRelationshipField<"brand_colour">;
 
   /**
+   * PaddingY field in *Page Section*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page_section.padding_y
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  padding_y: prismic.NumberField;
+
+  /**
    * Slice Zone field in *Page Section*
    *
    * - **Field Type**: Slice Zone

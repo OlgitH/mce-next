@@ -35,7 +35,7 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
       }}
       className=""
     >
-      <div className="container">
+      <div className="container px-4">
         {" "}
         <PrismicRichText
           field={slice.primary.text}

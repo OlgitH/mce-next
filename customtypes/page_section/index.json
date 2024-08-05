@@ -20,6 +20,13 @@
           "customtypes": ["brand_colour"]
         }
       },
+      "padding_y": {
+        "type": "Number",
+        "config": {
+          "label": "PaddingY",
+          "placeholder": ""
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

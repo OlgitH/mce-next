@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Shrikhand&family=Titan+One&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Shrikhand&family=Titan+One&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Titan+One&display=swap");
 
 [data-collapsible="true"].bg-white + [data-collapsible="true"].bg-white,
 [data-collapsible="true"].bg-slate-100
@@ -76,12 +76,11 @@ html {
 }
 
 /* TYPOGRAPHY */
-h1.banner-heading {
-  font-size: 2.4rem;
-  color: var(--white);
+.coffee-heading {
+  font-family: "Titan One", sans-serif;
+  font-weight: 400;
 }
 
-h3,
 h4,
 h5,
 h6,
@@ -90,23 +89,20 @@ h6,
 }
 h1,
 h2,
+h3,
 .display {
   font-family: "Libre Baskerville", serif;
-  font-weight: 700;
-  font-style: normal;
+  font-weight: 400;
 }
 h1 {
   font-size: 1.4rem;
-  font-weight: bold;
 }
 h2 {
   font-size: 1.4rem;
   margin-bottom: 0.6rem;
-  font-weight: bold;
 }
 h3 {
   font-size: 1.4rem;
-  font-weight: bold;
   margin-bottom: 0.6rem;
 }
 .featured-tours {
@@ -231,7 +227,9 @@ h3 {
 
 /* Header  */
 nav a {
-  @include lato-bold;
+  // @apply coffee-heading;
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
   &.active {
     color: var(--darkGreen);
   }

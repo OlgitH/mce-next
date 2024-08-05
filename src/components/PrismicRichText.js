@@ -11,7 +11,7 @@ const defaultComponents = {
     <li className="mb-1 list-decimal pl-1 last:mb-0 md:pl-2">{children}</li>
   ),
   list: ({ children }) => (
-    <ul className="mb-7 pl-4 last:mb-0 md:pl-6">{children}</ul>
+    <ul className="text-left mb-7 pl-4 last:mb-0 md:pl-6">{children}</ul>
   ),
   listItem: ({ children }) => (
     <li className="mb-1 list-disc pl-1 last:mb-0 md:pl-2">{children}</li>
