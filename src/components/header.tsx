@@ -46,7 +46,6 @@ export default function Header({ locales = [], navigation, settings }: Props) {
             ))}
           </ul>
           <div className="flex flex-wrap gap-3">
-            <span aria-hidden="true">🌐</span>
             <ul className="flex flex-wrap gap-3">
               {locales.map((locale) => (
                 <li key={locale.lang} className="first:font-semibold">
