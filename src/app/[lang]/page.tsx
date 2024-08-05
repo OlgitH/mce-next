@@ -37,7 +37,6 @@ export default async function Index({
         page_sections {
           page_section {
             ...page_sectionFields
-            padding_y
             background_colour {
               ...on brand_colour {
                 colour_code
