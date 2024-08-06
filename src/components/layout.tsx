@@ -10,9 +10,9 @@ type Props = {
 };
 
 export function Layout({ locales, navigation, settings, children }: Props) {
-  console.log("Header:", Header);
-  console.log("Footer:", Footer);
-  console.log("Socials:", Socials);
+  // console.log("Header:", Header);
+  // console.log("Footer:", Footer);
+  // console.log("Socials:", Socials);
 
   return (
     <div className="text-slate-800">

@@ -29,6 +29,11 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="relative"
+      style={{
+        backgroundColor: bgColourField.data
+          ? bgColourField.data.colour_code
+          : "",
+      }}
     >
       <CoverImage
         src={slice.primary.background_image}
@@ -37,6 +42,7 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
           (slice.primary.opacity && parseInt(slice.primary.opacity)) ??
           undefined
         }
+        overlay={slice.primary.has_overlay}
       >
         <div className="container px-4">
           <PrismicRichText

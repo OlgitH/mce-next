@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Titan+One&display=swap");
+
 [data-collapsible="true"].bg-white + [data-collapsible="true"].bg-white,
 [data-collapsible="true"].bg-slate-100
   + [data-collapsible="true"].bg-slate-100 {
@@ -76,7 +76,7 @@ html {
 
 /* TYPOGRAPHY */
 .coffee-heading {
-  font-family: "Titan One", sans-serif;
+  font-family: var(--font-titan);
   font-weight: 400;
 }
 
@@ -84,14 +84,15 @@ h4,
 h5,
 h6,
 .quote {
-  @include lato-bold;
+  font-family: var(--font-lato);
+  font-weight: 700;
 }
 h1,
 h2,
 h3,
 .display {
-  font-family: "Libre Baskerville", serif;
-  font-weight: 400;
+  font-family: var(--font-baskerville);
+  font-weight: 700;
 }
 h1 {
   font-size: 1.4rem;
@@ -227,7 +228,7 @@ h3 {
 /* Header  */
 nav a {
   // @apply coffee-heading;
-  font-family: "Libre Baskerville", serif;
+  font-family: var(--font-baskerville);
   font-weight: 700;
   &.active {
     color: var(--darkGreen);

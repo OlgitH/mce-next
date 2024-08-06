@@ -13,6 +13,7 @@ type Props = {
   alt?: string;
   bgColour?: string;
   opacity?: number;
+  overlay: boolean;
 };
 
 const CoverImage = ({
@@ -25,6 +26,7 @@ const CoverImage = ({
   alt,
   bgColour,
   opacity,
+  overlay,
 }: Props) => {
   const image = <PrismicNextImage field={src} className="object-cover" fill />;
   return (
@@ -41,10 +43,13 @@ const CoverImage = ({
           image
         )}
       </div>
-      <div
-        className="overlay w-full h-full absolute top-0 left-0 z-10"
-        style={{ backgroundColor: bgColour ?? "", opacity: opacity ?? 0.6 }}
-      ></div>
+      {overlay && (
+        <div
+          className="overlay w-full h-full absolute top-0 left-0 z-10"
+          style={{ backgroundColor: bgColour ?? "", opacity: opacity ?? 0.6 }}
+        ></div>
+      )}
+
       <div className="inner z-30 absolute top-0 left-0 text-white w-full h-full flex justify-start items-end">
         {children}
       </div>

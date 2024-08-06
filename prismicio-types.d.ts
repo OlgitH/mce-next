@@ -624,6 +624,17 @@ export interface BannerSliceDefaultPrimary {
   opacity: prismic.SelectField<
     "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9"
   >;
+
+  /**
+   * Has Overlay field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: banner.default.primary.has_overlay
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  has_overlay: prismic.BooleanField;
 }
 
 /**

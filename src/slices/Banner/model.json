@@ -56,6 +56,15 @@
               "0.9"
             ]
           }
+        },
+        "has_overlay": {
+          "type": "Boolean",
+          "config": {
+            "label": "Has Overlay",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": true
+          }
         }
       },
       "items": {}
