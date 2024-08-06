@@ -17,7 +17,6 @@ const PageSection = ({ children, bgColour }: Props) => {
       style={{
         backgroundColor: bgColour,
       }}
-      className="py-20"
     >
       {children}
     </section>

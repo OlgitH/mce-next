@@ -443,7 +443,16 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
-  newsletterDisclaimer: prismic.RichTextField;
+  newsletterDisclaimer: prismic.RichTextField /**
+   * Social Text field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.social_text
+   * - **Tab**: Socials
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  social_text: prismic.KeyTextField;
 }
 
 /**

@@ -30,8 +30,8 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
       style={{
         backgroundColor: bgColourField.data?.colour_code ?? "",
         color: colourField.data?.colour_code ?? "",
-        paddingTop: slice.primary.padding_y ?? 0,
-        paddingBottom: slice.primary.padding_y ?? 0,
+        paddingTop: slice.primary.padding_y ?? 20,
+        paddingBottom: slice.primary.padding_y ?? 20,
       }}
       className=""
     >

@@ -41,6 +41,15 @@
           "multi": "paragraph,em,strong,hyperlink"
         }
       }
+    },
+    "Socials": {
+      "social_text": {
+        "type": "Text",
+        "config": {
+          "label": "Social Text",
+          "placeholder": ""
+        }
+      }
     }
   }
 }
