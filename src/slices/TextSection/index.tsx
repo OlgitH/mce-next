@@ -33,7 +33,6 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
         paddingTop: slice.primary.padding_y ?? 20,
         paddingBottom: slice.primary.padding_y ?? 20,
       }}
-      className=""
     >
       <div className="container px-4">
         {" "}
