@@ -38,6 +38,7 @@ export default async function Tour({
       lang,
       graphQuery: `{
         tour {
+          booking_link
           slices {
             ... on banner {
               variation {
@@ -92,7 +93,11 @@ export default async function Tour({
         settings={settings}
         uid={tour.uid}
       >
-        <SliceZone slices={tour.data.slices} components={components} />
+        <SliceZone
+          context={{ bookingLink: tour.data.booking_link }}
+          slices={tour.data.slices}
+          components={components}
+        />
       </Layout>
     );
   } catch (error) {

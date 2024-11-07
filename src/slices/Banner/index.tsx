@@ -6,7 +6,9 @@ import CoverImage from "@/components/cover-image";
 /**
  * Props for `Banner`.
  */
-export type BannerProps = SliceComponentProps<Content.BannerSlice>;
+export type BannerProps = SliceComponentProps<Content.BannerSlice> & {
+  context?: Context; // Context type added and made optional
+};
 
 /**
  * Custom type for linked documents.
@@ -18,11 +20,17 @@ type BrandColourField = ContentRelationshipField<"brand_colour"> & {
 };
 
 /**
+ * Context type for external data.
+ */
+type Context = {
+  bookingLink?: { url: string }; // Made optional to allow for cases where context is undefined
+};
+
+/**
  * Component for "Banner" Slices.
  */
-const Banner = ({ slice }: BannerProps): JSX.Element => {
+const Banner = ({ slice, context }: BannerProps): JSX.Element => {
   const bgColourField = slice.primary.background_colour as BrandColourField;
-  // console.log(bgColourField);
 
   return (
     <section
@@ -30,34 +38,53 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
       data-slice-variation={slice.variation}
       className="relative"
       style={{
-        backgroundColor: bgColourField.data
-          ? bgColourField.data.colour_code
-          : "",
+        backgroundColor: bgColourField?.data?.colour_code || "",
       }}
     >
       <CoverImage
         src={slice.primary.background_image}
-        bgColour={bgColourField.data ? bgColourField.data.colour_code : ""}
+        bgColour={bgColourField?.data?.colour_code || ""}
         opacity={
-          (slice.primary.opacity && parseInt(slice.primary.opacity)) ??
-          undefined
+          slice.primary.opacity
+            ? parseInt(slice.primary.opacity, 10)
+            : undefined
         }
         overlay={slice.primary.has_overlay}
       >
-        <div className="container px-4 flex flex-col justify-center gap-8 h-full">
-          <PrismicRichText
-            field={slice.primary.inner_text}
-            components={{
-              heading1: ({ children }: { children: React.ReactNode }) => (
-                <h1 className="coffee-heading md:text-3xl font-bold">
-                  {children}
-                </h1>
-              ),
-              paragraph: ({ children }: { children: React.ReactNode }) => (
-                <p className="text-xl mb-6 last:mb-0 font-normal">{children}</p>
-              ),
-            }}
-          />
+        <div className="container px-4 h-full">
+          <div className="flex flex-col justify-center gap-8 h-full items-start">
+            <PrismicRichText
+              field={slice.primary.inner_text}
+              components={{
+                heading1: ({ children }: { children: React.ReactNode }) => (
+                  <h1 className="coffee-heading md:text-3xl font-bold">
+                    {children}
+                  </h1>
+                ),
+                paragraph: ({ children }: { children: React.ReactNode }) => (
+                  <p className="text-xl mb-6 last:mb-0 font-normal">
+                    {children}
+                  </p>
+                ),
+              }}
+            />
+            {context?.bookingLink && (
+              <button
+                className="text-2xl py-2 px-4 border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
+                style={{
+                  backgroundColor: bgColourField?.data?.colour_code ?? "white",
+                }}
+              >
+                <a
+                  href={context.bookingLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book now
+                </a>
+              </button>
+            )}
+          </div>
         </div>
       </CoverImage>
     </section>

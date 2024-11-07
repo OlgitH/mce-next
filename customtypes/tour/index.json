@@ -26,6 +26,14 @@
           "placeholder": ""
         }
       },
+      "booking_link": {
+        "type": "Link",
+        "config": {
+          "label": "Booking Link",
+          "placeholder": "",
+          "select": null
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

@@ -500,6 +500,17 @@ interface TourDocumentData {
   video: prismic.EmbedField;
 
   /**
+   * Booking Link field in *Tour*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.booking_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  booking_link: prismic.LinkField;
+
+  /**
    * Slice Zone field in *Tour*
    *
    * - **Field Type**: Slice Zone
