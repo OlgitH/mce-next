@@ -10,6 +10,7 @@ export type BrandColourField = ContentRelationshipField<"brand_colour"> & {
 export type PageSectionField = ContentRelationshipField<"page_section"> & {
   data: {
     background_colour: BrandColourField;
+    heading_colour: BrandColourField;
     slices: any;
   };
 };

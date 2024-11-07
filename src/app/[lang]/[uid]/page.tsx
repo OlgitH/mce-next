@@ -163,7 +163,12 @@ export default async function Page({
   const locales = await getLocales(page, client);
 
   return (
-    <Layout locales={locales} navigation={navigation} settings={settings}>
+    <Layout
+      locales={locales}
+      navigation={navigation}
+      settings={settings}
+      uid={page.uid}
+    >
       {/* Page slices */}
       <SliceZone slices={page.data.slices} components={components} />
       {/* Page sections */}

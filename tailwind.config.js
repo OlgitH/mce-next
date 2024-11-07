@@ -21,6 +21,7 @@ module.exports = {
         cream: "rgb(234, 205, 201)",
         green: "rgb(173, 243, 188)",
         darkGreen: "rgb(14, 55, 23)",
+        darkBlue: "rgb(4, 44, 99)",
         foam: "rgb(141, 182, 252)",
       },
     },

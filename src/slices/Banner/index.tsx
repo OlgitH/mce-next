@@ -44,12 +44,12 @@ const Banner = ({ slice }: BannerProps): JSX.Element => {
         }
         overlay={slice.primary.has_overlay}
       >
-        <div className="container px-4">
+        <div className="container px-4 flex flex-col justify-center gap-8 h-full">
           <PrismicRichText
             field={slice.primary.inner_text}
             components={{
               heading1: ({ children }: { children: React.ReactNode }) => (
-                <h1 className="coffee-heading md:text-3xl mb-10 md:mb-20 font-bold">
+                <h1 className="coffee-heading md:text-3xl font-bold">
                   {children}
                 </h1>
               ),

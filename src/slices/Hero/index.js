@@ -8,6 +8,7 @@ const Hero = ({ slice }) => {
       <div className="container">
         <div className="grid grid-cols-1 justify-items-center gap-10">
           <div className="max-w-2xl text-center leading-relaxed">
+            Hello
             <PrismicRichText
               field={slice.primary.text}
               components={{
@@ -20,6 +21,7 @@ const Hero = ({ slice }) => {
               }}
             />
           </div>
+
           {prismic.isFilled.link(slice.primary.buttonLink) &&
             prismic.isFilled.keyText(slice.primary.buttonText) && (
               <PrismicNextLink

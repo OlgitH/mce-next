@@ -86,7 +86,12 @@ export default async function Tour({
     const locales = await getLocales(tour, client);
 
     return (
-      <Layout locales={locales} navigation={navigation} settings={settings}>
+      <Layout
+        locales={locales}
+        navigation={navigation}
+        settings={settings}
+        uid={tour.uid}
+      >
         <SliceZone slices={tour.data.slices} components={components} />
       </Layout>
     );

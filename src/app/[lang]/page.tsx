@@ -167,7 +167,12 @@ export default async function Index({
   const locales = await getLocales(page, client);
 
   return (
-    <Layout locales={locales} navigation={navigation} settings={settings}>
+    <Layout
+      locales={locales}
+      navigation={navigation}
+      settings={settings}
+      uid={page.uid}
+    >
       <SliceZone
         slices={page.data.slices}
         components={components}

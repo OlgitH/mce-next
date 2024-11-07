@@ -17,7 +17,10 @@
           "config": {
             "label": "Type",
             "placeholder": "Choose from the dropdown",
-            "options": ["London", "Colombia"],
+            "options": [
+              "London",
+              "Colombia"
+            ],
             "default_value": "London"
           }
         }
