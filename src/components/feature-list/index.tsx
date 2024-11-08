@@ -18,13 +18,13 @@ const FeatureListComponent = ({ features }: Props) => {
           {features.map((feature, i) => (
             <div
               key={i}
-              className="text-center flex flex-col items-center sm:flex-1 grow"
+              className="group cursor-pointer text-center flex flex-col items-center sm:flex-1 grow"
             >
               {feature.data.image ? (
-                <div className="rounded-full bg-green p-4 w-[140px] h-[140px] flex justify-center items-center">
+                <div className="rounded-full bg-white  w-[180px] h-[180px] flex justify-center items-center">
                   <PrismicNextImage
                     field={feature.data.image}
-                    className="w-[80%]"
+                    className="w-full scale-105 group-hover:scale-110 transition-all duration-300 ease-in-out"
                   />
                 </div>
               ) : (
