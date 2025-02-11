@@ -45,9 +45,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
         src={slice.primary.background_image}
         bgColour={bgColourField?.data?.colour_code || ""}
         opacity={
-          slice.primary.opacity
-            ? parseInt(slice.primary.opacity, 10)
-            : undefined
+          slice.primary.opacity ? parseFloat(slice.primary.opacity) : undefined
         }
         overlay={slice.primary.has_overlay}
       >
