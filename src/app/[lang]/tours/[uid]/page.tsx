@@ -73,6 +73,27 @@ export default async function Tour({
                 }
               }
             }
+            ... on tour_info_section {
+              variation {
+                ...on default {
+                  primary {
+                    ...primaryFields
+                    background_colour {
+                      ...on brand_colour {
+                         colour_code
+                      }
+                    }
+                    text_colour {
+                      ...on brand_colour {
+                         colour_code
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+
           }
         }
       }`,
@@ -94,7 +115,7 @@ export default async function Tour({
         uid={tour.uid}
       >
         <SliceZone
-          context={{ bookingLink: tour.data.booking_link }}
+          context={{ bookingLink: tour.data.booking_link, locale: lang }}
           slices={tour.data.slices}
           components={components}
         />

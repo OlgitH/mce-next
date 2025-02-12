@@ -6,10 +6,8 @@ export const components = {
   banner: dynamic(() => import("./Banner")),
   feature_area: dynamic(() => import("./FeatureSection")),
   feature_list: dynamic(() => import("./FeatureList")),
-  hero: dynamic(() => import("./Hero")),
   image: dynamic(() => import("./Image")),
   text_section: dynamic(() => import("./TextSection")),
-  text_with_features: dynamic(() => import("./TextWithFeatures")),
-  text_with_image: dynamic(() => import("./TextWithImage")),
+  tour_info_section: dynamic(() => import("./TourInfoSection")),
   tour_section: dynamic(() => import("./TourSection")),
 };

@@ -471,7 +471,11 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
-type TourDocumentDataSlicesSlice = BannerSlice | TextSectionSlice | ImageSlice;
+type TourDocumentDataSlicesSlice =
+  | TourInfoSectionSlice
+  | BannerSlice
+  | TextSectionSlice
+  | ImageSlice;
 
 /**
  * Content for Tour documents
@@ -803,116 +807,6 @@ export type FeatureListSlice = prismic.SharedSlice<
 >;
 
 /**
- * Primary content in *Hero → Default → Primary*
- */
-export interface HeroSliceDefaultPrimary {
-  /**
-   * Text field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Introductory text for the page
-   * - **API ID Path**: hero.default.primary.text
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text: prismic.RichTextField;
-
-  /**
-   * Image field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.image
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  image: prismic.ImageField<never>;
-}
-
-/**
- * Default variation for Hero Slice
- *
- * - **API ID**: `default`
- * - **Description**: Hero
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type HeroSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<HeroSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Primary content in *Hero → With Button → Primary*
- */
-export interface HeroSliceWithButtonPrimary {
-  /**
-   * Text field in *Hero → With Button → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Introductory text for the page
-   * - **API ID Path**: hero.withButton.primary.text
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text: prismic.RichTextField;
-
-  /**
-   * Button Text field in *Hero → With Button → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.withButton.primary.buttonText
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  buttonText: prismic.KeyTextField;
-
-  /**
-   * Button Link field in *Hero → With Button → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.withButton.primary.buttonLink
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
-   */
-  buttonLink: prismic.LinkField;
-
-  /**
-   * Image field in *Hero → With Button → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.withButton.primary.image
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  image: prismic.ImageField<never>;
-}
-
-/**
- * With Button variation for Hero Slice
- *
- * - **API ID**: `withButton`
- * - **Description**: Hero
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type HeroSliceWithButton = prismic.SharedSliceVariation<
-  "withButton",
-  Simplify<HeroSliceWithButtonPrimary>,
-  never
->;
-
-/**
- * Slice variation for *Hero*
- */
-type HeroSliceVariation = HeroSliceDefault | HeroSliceWithButton;
-
-/**
- * Hero Shared Slice
- *
- * - **API ID**: `hero`
- * - **Description**: Hero
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
-
-/**
  * Primary content in *Image → White → Primary*
  */
 export interface ImageSliceWhitePrimary {
@@ -1080,140 +974,152 @@ export type TextSectionSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *TextWithFeatures → Default → Primary → Features*
+ * Item in *TourInfoSection → Default → Primary → Gallery Image*
  */
-export interface TextWithFeaturesSliceDefaultPrimaryFeaturesItem {
+export interface TourInfoSectionSliceDefaultPrimaryGalleryImageItem {
   /**
-   * Feature Description field in *TextWithFeatures → Default → Primary → Features*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Description of a feature
-   * - **API ID Path**: text_with_features.default.primary.features[].description
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  description: prismic.RichTextField;
-}
-
-/**
- * Primary content in *TextWithFeatures → Default → Primary*
- */
-export interface TextWithFeaturesSliceDefaultPrimary {
-  /**
-   * Icon field in *TextWithFeatures → Default → Primary*
+   * Image field in *TourInfoSection → Default → Primary → Gallery Image*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: text_with_features.default.primary.icon
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  icon: prismic.ImageField<never>;
-
-  /**
-   * Text field in *TextWithFeatures → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Primary text with rich formatting
-   * - **API ID Path**: text_with_features.default.primary.text
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text: prismic.RichTextField;
-
-  /**
-   * Features field in *TextWithFeatures → Default → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: text_with_features.default.primary.features[]
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  features: prismic.GroupField<
-    Simplify<TextWithFeaturesSliceDefaultPrimaryFeaturesItem>
-  >;
-}
-
-/**
- * Default variation for TextWithFeatures Slice
- *
- * - **API ID**: `default`
- * - **Description**: TextWithFeatures
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type TextWithFeaturesSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<TextWithFeaturesSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Slice variation for *TextWithFeatures*
- */
-type TextWithFeaturesSliceVariation = TextWithFeaturesSliceDefault;
-
-/**
- * TextWithFeatures Shared Slice
- *
- * - **API ID**: `text_with_features`
- * - **Description**: TextWithFeatures
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type TextWithFeaturesSlice = prismic.SharedSlice<
-  "text_with_features",
-  TextWithFeaturesSliceVariation
->;
-
-/**
- * Primary content in *TextWithImage → Default → Primary*
- */
-export interface TextWithImageSliceDefaultPrimary {
-  /**
-   * Text field in *TextWithImage → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Text displayed next to image
-   * - **API ID Path**: text_with_image.default.primary.text
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text: prismic.RichTextField;
-
-  /**
-   * Image field in *TextWithImage → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: text_with_image.default.primary.image
+   * - **API ID Path**: tour_info_section.default.primary.gallery_image[].image
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   image: prismic.ImageField<never>;
 }
 
 /**
- * Default variation for TextWithImage Slice
+ * Item in *TourInfoSection → Default → Primary → Included Section*
+ */
+export interface TourInfoSectionSliceDefaultPrimaryIncludedSectionItem {
+  /**
+   * Includes field in *TourInfoSection → Default → Primary → Included Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.included_section[].includes
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  includes: prismic.RichTextField;
+
+  /**
+   * Does Not Include field in *TourInfoSection → Default → Primary → Included Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.included_section[].does_not_include
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  does_not_include: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *TourInfoSection → Default → Primary*
+ */
+export interface TourInfoSectionSliceDefaultPrimary {
+  /**
+   * Overview field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.overview
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  overview: prismic.RichTextField;
+
+  /**
+   * Dates field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.dates
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  dates: prismic.RichTextField;
+
+  /**
+   * Price field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.price
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  price: prismic.NumberField;
+
+  /**
+   * Gallery Image field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.gallery_image[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  gallery_image: prismic.GroupField<
+    Simplify<TourInfoSectionSliceDefaultPrimaryGalleryImageItem>
+  >;
+
+  /**
+   * Included Section field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.included_section[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  included_section: prismic.GroupField<
+    Simplify<TourInfoSectionSliceDefaultPrimaryIncludedSectionItem>
+  >;
+
+  /**
+   * Background Colour field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.background_colour
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_colour: prismic.ContentRelationshipField;
+
+  /**
+   * Text Colour field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.text_colour
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  text_colour: prismic.ContentRelationshipField;
+}
+
+/**
+ * Default variation for TourInfoSection Slice
  *
  * - **API ID**: `default`
- * - **Description**: TextWithImage
+ * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type TextWithImageSliceDefault = prismic.SharedSliceVariation<
+export type TourInfoSectionSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Simplify<TextWithImageSliceDefaultPrimary>,
+  Simplify<TourInfoSectionSliceDefaultPrimary>,
   never
 >;
 
 /**
- * Slice variation for *TextWithImage*
+ * Slice variation for *TourInfoSection*
  */
-type TextWithImageSliceVariation = TextWithImageSliceDefault;
+type TourInfoSectionSliceVariation = TourInfoSectionSliceDefault;
 
 /**
- * TextWithImage Shared Slice
+ * TourInfoSection Shared Slice
  *
- * - **API ID**: `text_with_image`
- * - **Description**: TextWithImage
+ * - **API ID**: `tour_info_section`
+ * - **Description**: TourInfoSection
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type TextWithImageSlice = prismic.SharedSlice<
-  "text_with_image",
-  TextWithImageSliceVariation
+export type TourInfoSectionSlice = prismic.SharedSlice<
+  "tour_info_section",
+  TourInfoSectionSliceVariation
 >;
 
 /**
@@ -1343,12 +1249,6 @@ declare module "@prismicio/client" {
       FeatureListSliceDefaultPrimary,
       FeatureListSliceVariation,
       FeatureListSliceDefault,
-      HeroSlice,
-      HeroSliceDefaultPrimary,
-      HeroSliceWithButtonPrimary,
-      HeroSliceVariation,
-      HeroSliceDefault,
-      HeroSliceWithButton,
       ImageSlice,
       ImageSliceWhitePrimary,
       ImageSliceLightSlatePrimary,
@@ -1359,15 +1259,12 @@ declare module "@prismicio/client" {
       TextSectionSliceDefaultPrimary,
       TextSectionSliceVariation,
       TextSectionSliceDefault,
-      TextWithFeaturesSlice,
-      TextWithFeaturesSliceDefaultPrimaryFeaturesItem,
-      TextWithFeaturesSliceDefaultPrimary,
-      TextWithFeaturesSliceVariation,
-      TextWithFeaturesSliceDefault,
-      TextWithImageSlice,
-      TextWithImageSliceDefaultPrimary,
-      TextWithImageSliceVariation,
-      TextWithImageSliceDefault,
+      TourInfoSectionSlice,
+      TourInfoSectionSliceDefaultPrimaryGalleryImageItem,
+      TourInfoSectionSliceDefaultPrimaryIncludedSectionItem,
+      TourInfoSectionSliceDefaultPrimary,
+      TourInfoSectionSliceVariation,
+      TourInfoSectionSliceDefault,
       TourSectionSlice,
       TourSectionSliceDefaultPrimaryToursItem,
       TourSectionSliceDefaultPrimary,

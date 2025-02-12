@@ -39,6 +39,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "tour_info_section": {
+              "type": "SharedSlice"
+            },
             "banner": {
               "type": "SharedSlice"
             },

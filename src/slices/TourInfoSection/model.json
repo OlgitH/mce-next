@@ -1,0 +1,102 @@
+{
+  "id": "tour_info_section",
+  "type": "SharedSlice",
+  "name": "TourInfoSection",
+  "description": "TourInfoSection",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "overview": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Overview",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "dates": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Dates",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "price": {
+          "type": "Number",
+          "config": {
+            "label": "Price",
+            "placeholder": ""
+          }
+        },
+        "gallery_image": {
+          "type": "Group",
+          "config": {
+            "label": "Gallery Image",
+            "repeat": true,
+            "fields": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "label": "Image",
+                  "constraint": {},
+                  "thumbnails": []
+                }
+              }
+            }
+          }
+        },
+        "included_section": {
+          "type": "Group",
+          "config": {
+            "label": "Included Section",
+            "repeat": false,
+            "fields": {
+              "includes": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Includes",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "multi": "strong,em,hyperlink,list-item"
+                }
+              },
+              "does_not_include": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Does Not Include",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "multi": "strong,em,hyperlink,list-item"
+                }
+              }
+            }
+          }
+        },
+        "background_colour": {
+          "type": "Link",
+          "config": {
+            "label": "Background Colour",
+            "select": "document"
+          }
+        },
+        "text_colour": {
+          "type": "Link",
+          "config": {
+            "label": "Text Colour",
+            "select": "document"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
