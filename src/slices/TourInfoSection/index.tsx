@@ -22,6 +22,7 @@ const TourInfoSection = ({
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      className="py-10"
     >
       <div className="container px-4 flex md:flex-row flex-col">
         <div className="overview basis-1/2 md:pr-10">
