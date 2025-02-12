@@ -25,7 +25,7 @@ const TourInfoSection = ({
       className="py-10"
     >
       <div className="container px-4 flex md:flex-row flex-col">
-        <div className="overview basis-1/2 md:pr-10">
+        <div className="overview basis-1/2 md:pr-10 mb-10">
           <h2>
             {locale === "es-co"
               ? "Resumen"
