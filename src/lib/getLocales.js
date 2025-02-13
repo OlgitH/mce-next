@@ -1,15 +1,3 @@
-/**
- * Returns an array of document metadata containing each locale a document has
- * been translated into.
- *
- * A `lang_name` property is included in each document containing the document's
- * locale name as it is configured in the Prismic repository.
- *
- * @param {import("@prismicio/types").PrismicDocument} doc
- * @param {import("@prismicio/client").Client} client
- *
- * @returns {Promise<(import("@prismicio/types").PrismicDocument & { lang_name: string })[]>}
- */
 export async function getLocales(doc, client) {
   const [repository, altDocs] = await Promise.all([
     client.getRepository(),
@@ -20,12 +8,25 @@ export async function getLocales(doc, client) {
             lang: "*",
             // Exclude all fields to speed up the query.
             fetch: `${doc.type}.__nonexistent-field__`,
-          },
+          }
         )
       : Promise.resolve([]),
   ]);
 
-  return [doc, ...altDocs].map((doc) => {
+  // Combine the original document and alternate documents
+  const allDocs = [doc, ...altDocs];
+
+  // Sort all documents by their language code alphabetically
+  const sortedDocs = allDocs.sort((a, b) => {
+    // Ensure English (en-gb) comes first
+    if (a.lang === "en-gb") return -1;
+    if (b.lang === "en-gb") return 1;
+
+    // Otherwise, sort the rest alphabetically by language code
+    return a.lang.localeCompare(b.lang);
+  });
+
+  return sortedDocs.map((doc) => {
     return {
       ...doc,
       lang_name: repository.languages.find((lang) => lang.id === doc.lang).name,

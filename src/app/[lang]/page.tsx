@@ -165,6 +165,7 @@ export default async function Index({
   const settings = await client.getSingle("settings", { lang });
 
   const locales = await getLocales(page, client);
+  console.log("locales:", locales);
 
   return (
     <Layout

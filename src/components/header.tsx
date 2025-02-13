@@ -21,6 +21,7 @@ type Props = {
 
 export default function Header({ locales = [], navigation, settings }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentLocale, setCurrentLocale] = useState<string>("");
   const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
@@ -45,6 +46,15 @@ export default function Header({ locales = [], navigation, settings }: Props) {
   }, [isOpen]);
 
   const pathname = usePathname();
+
+  // Find the current language by matching the pathname, but don't reorder the list
+  useEffect(() => {
+    const currentLanguage =
+      locales.find(
+        (locale) => pathname.startsWith(locale.url) || pathname === locale.url
+      )?.lang || "en-gb"; // Default to "en-gb" if no match is found
+    setCurrentLocale(currentLanguage);
+  }, [pathname, locales]);
 
   return (
     <header className="py-4">
@@ -74,6 +84,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
               ))}
             </div>
 
+            {/* Language Switcher */}
             <div className="hidden md:block flex flex-wrap gap-3">
               <ul className="flex flex-wrap gap-3">
                 {locales.map((locale) => (
@@ -82,6 +93,11 @@ export default function Header({ locales = [], navigation, settings }: Props) {
                       href={locale.url}
                       locale={locale.lang}
                       aria-label={`Change language to ${locale.lang_name}`}
+                      className={
+                        currentLocale === locale.lang
+                          ? "bg-blue-500 text-white p-2 rounded"
+                          : "hover:bg-gray-200 p-2 rounded"
+                      }
                     >
                       {localeLabels[locale.lang] || locale.lang}
                     </PrismicNextLink>
@@ -135,6 +151,11 @@ export default function Header({ locales = [], navigation, settings }: Props) {
                     href={locale.url}
                     locale={locale.lang}
                     aria-label={`Change language to ${locale.lang_name}`}
+                    className={
+                      currentLocale === locale.lang
+                        ? "bg-blue-500 text-white p-2 rounded"
+                        : "hover:bg-gray-200 p-2 rounded"
+                    }
                   >
                     {localeLabels[locale.lang] || locale.lang}
                   </PrismicNextLink>
