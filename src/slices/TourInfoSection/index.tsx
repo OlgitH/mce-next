@@ -1,7 +1,7 @@
 import { Content, ContentRelationshipField } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import { PrismicRichText } from "@/components/PrismicRichText";
-
+import Gallery from "@/components/gallery";
 /**
  * Props for `TourInfoSection`.
  */
@@ -10,9 +10,17 @@ export type TourInfoSectionProps =
     context: { locale: string };
   };
 
+type Image = {
+  image: {
+    url: string;
+    alt: string;
+  };
+};
+
 /**
  * Component for "TourInfoSection" Slices.
  */
+
 const TourInfoSection = ({
   slice,
   context, // Destructure directly
@@ -46,6 +54,12 @@ const TourInfoSection = ({
               ),
             }}
           />
+
+          {slice.primary.gallery_images ? (
+            <Gallery images={slice.primary.gallery_images as Image[]} />
+          ) : (
+            ""
+          )}
         </div>
         <div className="details basis-1/2">
           <div className="mb-10">

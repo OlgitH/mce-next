@@ -38,6 +38,7 @@
 				"thumbnails": {}
 			},
 			"background_colour": {
+				"key": "9efcb281-05e3-4eeb-b013-0a1a9a33c2b4",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "DocumentLink",
@@ -52,6 +53,14 @@
 			"has_overlay": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"text_colour": {
+				"key": "1df934f1-c140-4086-843d-7a200081d3e8",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "DocumentLink",
+					"id": "mock_document_id"
+				}
 			}
 		},
 		"items": []

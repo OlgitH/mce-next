@@ -27,7 +27,7 @@ const FeatureList = ({ slice }: FeatureListProps): JSX.Element => {
             field={slice.primary.title}
             components={{
               heading2: ({ children }: { children: React.ReactNode }) => (
-                <h2 className="font-[700] mb-8">{children}</h2>
+                <h2 className="mb-8">{children}</h2>
               ),
               paragraph: ({ children }: { children: React.ReactNode }) => (
                 <p>{children}</p>

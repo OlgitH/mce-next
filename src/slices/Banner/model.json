@@ -39,6 +39,16 @@
             ]
           }
         },
+        "text_colour": {
+          "type": "Link",
+          "config": {
+            "label": "Text Colour",
+            "select": "document",
+            "customtypes": [
+              "brand_colour"
+            ]
+          }
+        },
         "opacity": {
           "type": "Select",
           "config": {

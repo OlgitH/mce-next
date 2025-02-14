@@ -70,6 +70,11 @@ export default async function Index({
                             colour_code
                           }
                         }
+                        text_colour {
+                          ...on brand_colour {
+                            colour_code
+                          }
+                        }
                       }
                     }
                   }
@@ -111,6 +116,11 @@ export default async function Index({
                 primary {
                   ...primaryFields
                   background_colour {
+                    ...on brand_colour {
+                       colour_code
+                    }
+                  }
+                  text_colour {
                     ...on brand_colour {
                        colour_code
                     }

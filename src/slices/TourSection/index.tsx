@@ -45,7 +45,7 @@ const TourSection = ({ slice }: TourSectionProps): JSX.Element => {
       }}
     >
       <div className="container px-4 flex flex-col justify-center">
-        <h2 className="font-[700]">{slice.primary.title}</h2>
+        <h2 className="">{slice.primary.title}</h2>
 
         <div className="tour-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-auto gap-4">
           {slice.primary.tours &&

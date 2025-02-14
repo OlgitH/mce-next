@@ -19,10 +19,6 @@ export function Layout({
   children,
   uid,
 }: Props) {
-  // console.log("Header:", Header);
-  // console.log("Footer:", Footer);
-  // console.log("Socials:", Socials);
-
   return (
     <div className="text-slate-800" id={uid}>
       <Header locales={locales} navigation={navigation} settings={settings} />

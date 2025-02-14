@@ -16,7 +16,7 @@ const baskerville = Libre_Baskerville({
 });
 
 const lato = Lato({
-  weight: ["400", "700"],
+  weight: ["400", "700", "900"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-lato",

@@ -30,42 +30,6 @@
 				"value": "1",
 				"type": "Number"
 			},
-			"gallery_image": {
-				"__TYPE__": "GroupContentType",
-				"value": [
-					{
-						"__TYPE__": "GroupItemContent",
-						"value": [
-							[
-								"image",
-								{
-									"origin": {
-										"id": "main",
-										"url": "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1",
-										"width": 5616,
-										"height": 3744
-									},
-									"url": "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1",
-									"width": 5616,
-									"height": 3744,
-									"edit": {
-										"zoom": 1,
-										"crop": {
-											"x": 0,
-											"y": 0
-										},
-										"background": "transparent"
-									},
-									"credits": null,
-									"alt": null,
-									"__TYPE__": "ImageContent",
-									"thumbnails": {}
-								}
-							]
-						]
-					}
-				]
-			},
 			"included_section": {
 				"__TYPE__": "GroupContentType",
 				"value": [
@@ -105,6 +69,7 @@
 				]
 			},
 			"background_colour": {
+				"key": "0b1bba6a-2f83-4e3c-8296-3dba2cb18af5",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "DocumentLink",
@@ -112,11 +77,46 @@
 				}
 			},
 			"text_colour": {
+				"key": "3494f906-b71e-4005-9a7e-efbd0b2473aa",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "DocumentLink",
 					"id": "mock_document_id"
 				}
+			},
+			"gallery_images": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"image",
+								{
+									"__TYPE__": "ImageContent",
+									"origin": {
+										"id": "main",
+										"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+										"width": 4024,
+										"height": 4024
+									},
+									"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+									"width": 4024,
+									"height": 4024,
+									"edit": {
+										"zoom": 1,
+										"crop": {
+											"x": 0,
+											"y": 0
+										},
+										"background": "transparent"
+									},
+									"thumbnails": {}
+								}
+							]
+						]
+					}
+				]
 			}
 		},
 		"items": []

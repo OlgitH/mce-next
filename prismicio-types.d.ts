@@ -203,7 +203,7 @@ export interface NavigationDocumentDataLinksItem {
    * - **API ID Path**: navigation.links[].link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  link: prismic.LinkField;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -512,7 +512,13 @@ interface TourDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  booking_link: prismic.LinkField;
+  booking_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Slice Zone field in *Tour*
@@ -636,6 +642,16 @@ export interface BannerSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
   background_colour: prismic.ContentRelationshipField<"brand_colour">;
+
+  /**
+   * Text Colour field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.default.primary.text_colour
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  text_colour: prismic.ContentRelationshipField<"brand_colour">;
 
   /**
    * opacity field in *Banner → Default → Primary*
@@ -974,15 +990,15 @@ export type TextSectionSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *TourInfoSection → Default → Primary → Gallery Image*
+ * Item in *TourInfoSection → Default → Primary → Gallery Images*
  */
-export interface TourInfoSectionSliceDefaultPrimaryGalleryImageItem {
+export interface TourInfoSectionSliceDefaultPrimaryGalleryImagesItem {
   /**
-   * Image field in *TourInfoSection → Default → Primary → Gallery Image*
+   * Image field in *TourInfoSection → Default → Primary → Gallery Images*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: tour_info_section.default.primary.gallery_image[].image
+   * - **API ID Path**: tour_info_section.default.primary.gallery_images[].image
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   image: prismic.ImageField<never>;
@@ -1048,15 +1064,15 @@ export interface TourInfoSectionSliceDefaultPrimary {
   price: prismic.NumberField;
 
   /**
-   * Gallery Image field in *TourInfoSection → Default → Primary*
+   * Gallery Images field in *TourInfoSection → Default → Primary*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: tour_info_section.default.primary.gallery_image[]
+   * - **API ID Path**: tour_info_section.default.primary.gallery_images[]
    * - **Documentation**: https://prismic.io/docs/field#group
    */
-  gallery_image: prismic.GroupField<
-    Simplify<TourInfoSectionSliceDefaultPrimaryGalleryImageItem>
+  gallery_images: prismic.GroupField<
+    Simplify<TourInfoSectionSliceDefaultPrimaryGalleryImagesItem>
   >;
 
   /**
@@ -1210,6 +1226,17 @@ declare module "@prismicio/client" {
     ): prismic.Client<AllDocumentTypes>;
   }
 
+  interface CreateWriteClient {
+    (
+      repositoryNameOrEndpoint: string,
+      options: prismic.WriteClientConfig,
+    ): prismic.WriteClient<AllDocumentTypes>;
+  }
+
+  interface CreateMigration {
+    (): prismic.Migration<AllDocumentTypes>;
+  }
+
   namespace Content {
     export type {
       BrandColourDocument,
@@ -1260,7 +1287,7 @@ declare module "@prismicio/client" {
       TextSectionSliceVariation,
       TextSectionSliceDefault,
       TourInfoSectionSlice,
-      TourInfoSectionSliceDefaultPrimaryGalleryImageItem,
+      TourInfoSectionSliceDefaultPrimaryGalleryImagesItem,
       TourInfoSectionSliceDefaultPrimaryIncludedSectionItem,
       TourInfoSectionSliceDefaultPrimary,
       TourInfoSectionSliceVariation,

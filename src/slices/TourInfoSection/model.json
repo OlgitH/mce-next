@@ -37,10 +37,10 @@
             "placeholder": ""
           }
         },
-        "gallery_image": {
+        "gallery_images": {
           "type": "Group",
           "config": {
-            "label": "Gallery Image",
+            "label": "Gallery Images",
             "repeat": true,
             "fields": {
               "image": {
