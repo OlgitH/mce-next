@@ -66,7 +66,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
               ),
             }}
           />
-          {context?.bookingLink && (
+          {context?.bookingLink?.url && (
             <button
               className="text-2xl py-2 px-4 border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
               style={{
