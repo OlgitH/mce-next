@@ -51,12 +51,12 @@ const CoverImage = ({
           ></div> */}
 
           {/* Half-overlay with fade-out effect */}
-          <div
+          {/* <div
             className="half-overlay h-full w-full absolute top-0 left-0 z-10"
             style={{
               background: `linear-gradient(to right, ${bgColour} 50%, transparent 100%)`,
             }}
-          ></div>
+          ></div> */}
         </>
       )}
 
