@@ -61,6 +61,10 @@
 					"__TYPE__": "DocumentLink",
 					"id": "mock_document_id"
 				}
+			},
+			"full_height": {
+				"__TYPE__": "BooleanContent",
+				"value": false
 			}
 		},
 		"items": []

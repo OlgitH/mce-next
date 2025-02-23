@@ -675,6 +675,17 @@ export interface BannerSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#boolean
    */
   has_overlay: prismic.BooleanField;
+
+  /**
+   * Full Height field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: banner.default.primary.full_height
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  full_height: prismic.BooleanField;
 }
 
 /**

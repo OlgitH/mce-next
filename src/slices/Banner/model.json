@@ -75,6 +75,15 @@
             "placeholder_true": "true",
             "default_value": true
           }
+        },
+        "full_height": {
+          "type": "Boolean",
+          "config": {
+            "label": "Full Height",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": true
+          }
         }
       },
       "items": {}

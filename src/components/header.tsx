@@ -22,6 +22,7 @@ type Props = {
 export default function Header({ locales = [], navigation, settings }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentLocale, setCurrentLocale] = useState<string>("");
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
@@ -56,20 +57,38 @@ export default function Header({ locales = [], navigation, settings }: Props) {
     setCurrentLocale(currentLanguage);
   }, [pathname, locales]);
 
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.8) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="py-4">
+    <header
+      className={`fixed top-0 left-0 z-50 w-full bg-darkBlue text-cream transition-all duration-300 ${
+        isScrolled ? "py-2" : "py-4"
+      }`}
+    >
       <nav>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 gap-4">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 transition-all duration-300">
               <PrismicNextLink field={navigation.data?.links[0].link}>
                 <span className="sr-only">Go to homepage</span>
                 {prismic.isFilled.image(settings.data.logo) && (
                   <PrismicNextImage
                     field={settings.data.logo}
                     alt={(settings.data.logo.alt as any) ?? ""}
-                    width="140"
+                    width={isScrolled ? 50 : 80} // Shrinks logo when scrolled
                   />
                 )}
               </PrismicNextLink>

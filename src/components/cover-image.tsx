@@ -9,7 +9,7 @@ type Props = {
   slug?: string;
   children?: React.ReactNode;
   width?: number;
-  height?: number;
+  height?: string;
   alt?: string;
   bgColour?: string;
   opacity?: number;
@@ -32,10 +32,7 @@ const CoverImage = ({
 
   return (
     <>
-      <div
-        className="sm:mx-0 relative z-0 w-full min-h-[300px]"
-        style={{ height: height ? height + "px" : "" }}
-      >
+      <div className="sm:mx-0 z-0 w-full">
         {slug ? (
           <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
             {image}

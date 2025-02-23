@@ -41,6 +41,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
       style={{
         backgroundColor: bgColourField?.data?.colour_code || "",
         color: textColourField?.data?.colour_code || "",
+        height: "80vh",
       }}
     >
       <CoverImage
