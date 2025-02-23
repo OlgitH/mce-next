@@ -36,7 +36,7 @@ export default function RootLayout({
       lang="en"
       className={`${titan.variable} ${lato.variable} ${baskerville.variable} `}
     >
-      <body className="overflow-x-hidden antialiased">
+      <body className="overflow-x-hidden antialiased min-h-screen">
         {children}
         <PrismicPreview repositoryName={repositoryName} />
       </body>

@@ -114,6 +114,11 @@ export default async function Tour({
         settings={settings}
         uid={tour.uid}
       >
+        {tour.data.slices.length < 1 && (
+          <div className="min-h-screen flex items-center justify-center">
+            Tour has no content
+          </div>
+        )}
         <SliceZone
           context={{ bookingLink: tour.data.booking_link, locale: lang }}
           slices={tour.data.slices}

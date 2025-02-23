@@ -60,7 +60,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.2) {
+      if (window.scrollY > 60 || window.innerWidth < 600) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -88,7 +88,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
                   <PrismicNextImage
                     field={settings.data.logo}
                     alt={(settings.data.logo.alt as any) ?? ""}
-                    width={isScrolled ? 50 : 80} // Shrinks logo when scrolled
+                    width={isScrolled ? 40 : 60} // Shrinks logo when scrolled
                   />
                 )}
               </PrismicNextLink>
@@ -134,9 +134,9 @@ export default function Header({ locales = [], navigation, settings }: Props) {
                 className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 z-50"
               >
                 {isOpen ? (
-                  <XMarkIcon className="h-6 w-6" />
+                  <XMarkIcon className="h-10 w-10 text-cream" />
                 ) : (
-                  <Bars3Icon className="h-6 w-6" />
+                  <Bars3Icon className="h-10 w-10 text-cream" />
                 )}
               </button>
             </div>

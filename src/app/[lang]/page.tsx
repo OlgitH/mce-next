@@ -189,6 +189,11 @@ export default async function Index({
         components={components}
         context={{ features }}
       />
+      {page.data.page_sections.length < 1 && (
+        <div className="min-h-screen flex items-center justify-center">
+          Page has no content
+        </div>
+      )}
       {/* Page sections */}
       {page.data.page_sections &&
         page.data.page_sections.map((item, i) => {

@@ -20,7 +20,7 @@ export function Layout({
   uid,
 }: Props) {
   return (
-    <div className="text-slate-800" id={uid}>
+    <div id={uid}>
       <Header locales={locales} navigation={navigation} settings={settings} />
       <main>{children}</main>
       <Socials />
