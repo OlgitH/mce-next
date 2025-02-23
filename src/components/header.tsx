@@ -60,7 +60,7 @@ export default function Header({ locales = [], navigation, settings }: Props) {
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.8) {
+      if (window.scrollY > window.innerHeight * 0.2) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);

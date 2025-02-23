@@ -28,7 +28,9 @@ const CoverImage = ({
   opacity,
   overlay,
 }: Props) => {
-  const image = <PrismicNextImage field={src} className="object-cover" fill />;
+  const image = (
+    <PrismicNextImage field={src} className="object-cover object-center" fill />
+  );
 
   return (
     <>
