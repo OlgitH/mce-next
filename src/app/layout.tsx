@@ -1,11 +1,11 @@
-import { Titan_One, Libre_Baskerville, Lato } from "next/font/google";
+import { Sigmar, Libre_Baskerville, Lato } from "next/font/google";
 import "./globals.scss";
 
-const titan = Titan_One({
+const sigmar = Sigmar({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-titan",
+  variable: "--font-sigmar",
 });
 
 const baskerville = Libre_Baskerville({
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${titan.variable} ${lato.variable} ${baskerville.variable} `}
+      className={`${sigmar.variable} ${lato.variable} ${baskerville.variable} `}
     >
       <body className="overflow-x-hidden antialiased min-h-screen">
         {children}

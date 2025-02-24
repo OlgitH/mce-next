@@ -56,10 +56,17 @@ html {
 
 /* TYPOGRAPHY */
 h1.coffee-heading {
-  font-family: var(--font-lato);
-  font-weight: 900;
+  font-family: var(--font-sigmar);
   text-transform: uppercase;
-  font-size: 2.4rem;
+  font-size: 2.8rem;
+  letter-spacing: 4px;
+  line-height: 1.2;
+  @media screen and (min-width: 768px) {
+    font-size: 3.2rem;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 4rem;
+  }
 }
 
 h4,
