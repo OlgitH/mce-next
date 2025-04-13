@@ -5,6 +5,7 @@ import { getLocales } from "@/lib/getLocales";
 import { createClient } from "@/prismicio";
 import { Layout } from "@/components/layout";
 import { components } from "@/slices";
+import BookingForm from "@/components/booking-form"; // Import the correct component
 
 export async function generateMetadata({
   params: { uid, lang },
@@ -39,6 +40,12 @@ export default async function Tour({
       graphQuery: `{
         tour {
           booking_link
+          dates {
+            reference
+            price
+            start
+            end
+          }
           slices {
             ... on banner {
               variation {
@@ -92,20 +99,22 @@ export default async function Tour({
                 }
               }
             }
-
-
           }
+          
         }
       }`,
     });
 
-    const navigation = await client.getSingle("navigation", {
-      lang,
-    });
-    const settings = await client.getSingle("settings", {
-      lang,
-    });
+    const navigation = await client.getSingle("navigation", { lang });
+    const settings = await client.getSingle("settings", { lang });
     const locales = await getLocales(tour, client);
+
+    // Extract dates from the response
+    const dates = tour?.data?.dates || [];
+    // const bookingLink = tour?.data?.booking_link;
+
+    // Check if there are available dates
+    const hasAvailableDates = dates.length > 0;
 
     return (
       <Layout
@@ -119,11 +128,21 @@ export default async function Tour({
             Tour has no content
           </div>
         )}
+
         <SliceZone
-          context={{ bookingLink: tour.data.booking_link, locale: lang }}
+          context={{ locale: lang }}
           slices={tour.data.slices}
           components={components}
         />
+
+        {/* Conditionally render the BookingForm only if dates are available */}
+        {hasAvailableDates && (
+          <section className="booking-section py-8 bg-emerald-900 text-cream">
+            <div className="container mx-auto flex justify-center">
+              <BookingForm tours={dates} lang={lang} />
+            </div>
+          </section>
+        )}
       </Layout>
     );
   } catch (error) {

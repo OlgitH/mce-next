@@ -22,11 +22,13 @@
     "@prismicio/react": "^2.8.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "googleapis": "^148.0.0",
     "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "stripe": "^18.0.0"
   },
   "devDependencies": {
     "@slicemachine/adapter-next": "^0.3.42",

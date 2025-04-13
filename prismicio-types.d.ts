@@ -471,6 +471,51 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Item in *Tour → Dates*
+ */
+export interface TourDocumentDataDatesItem {
+  /**
+   * Price field in *Tour → Dates*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].price
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  price: prismic.NumberField;
+
+  /**
+   * Reference field in *Tour → Dates*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].reference
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  reference: prismic.KeyTextField;
+
+  /**
+   * Start field in *Tour → Dates*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].start
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  start: prismic.DateField;
+
+  /**
+   * End field in *Tour → Dates*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].end
+   * - **Documentation**: https://prismic.io/docs/field#date
+   */
+  end: prismic.DateField;
+}
+
 type TourDocumentDataSlicesSlice =
   | TourInfoSectionSlice
   | BannerSlice
@@ -519,6 +564,17 @@ interface TourDocumentData {
     prismic.FieldState,
     never
   >;
+
+  /**
+   * Dates field in *Tour*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  dates: prismic.GroupField<Simplify<TourDocumentDataDatesItem>>;
 
   /**
    * Slice Zone field in *Tour*
@@ -1272,6 +1328,7 @@ declare module "@prismicio/client" {
       SettingsDocumentData,
       TourDocument,
       TourDocumentData,
+      TourDocumentDataDatesItem,
       TourDocumentDataSlicesSlice,
       AllDocumentTypes,
       BannerSlice,

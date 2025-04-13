@@ -34,6 +34,43 @@
           "select": null
         }
       },
+      "dates": {
+        "type": "Group",
+        "config": {
+          "label": "Dates",
+          "repeat": true,
+          "fields": {
+            "price": {
+              "type": "Number",
+              "config": {
+                "label": "Price",
+                "placeholder": ""
+              }
+            },
+            "reference": {
+              "type": "Text",
+              "config": {
+                "label": "Reference",
+                "placeholder": ""
+              }
+            },
+            "start": {
+              "type": "Date",
+              "config": {
+                "label": "Start",
+                "placeholder": ""
+              }
+            },
+            "end": {
+              "type": "Date",
+              "config": {
+                "label": "End",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
