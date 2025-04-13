@@ -28,15 +28,14 @@ export async function POST(req: NextRequest) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
             currency: "gbp",
             product_data: {
-              name: body.tour, // The name of the tour
+              name: body.tour,
             },
-            unit_amount: body.price * 100, // Convert price to pence (for GBP)
+            unit_amount: body.price * 100,
           },
           quantity: 1,
         },
@@ -44,15 +43,14 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/cancel`,
-      customer_email: body.email, // Include email here
-      customer: {
-        name: `${body.firstName} ${body.lastName}`,
-        phone: body.phone, // Add phone number here
+      customer_email: body.email,
+      phone_number_collection: {
+        enabled: true,
       },
       metadata: {
         name: `${body.firstName} ${body.lastName}`,
         email: body.email,
-        phone: body.phone,
+        phone: body.phone, // stored, but not shown in customer_details
         tour: body.tour,
         date: body.date,
       },
