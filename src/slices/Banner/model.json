@@ -84,6 +84,15 @@
             "placeholder_true": "true",
             "default_value": true
           }
+        },
+        "show_social_links": {
+          "type": "Boolean",
+          "config": {
+            "label": "Show Social Links",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
         }
       },
       "items": {}

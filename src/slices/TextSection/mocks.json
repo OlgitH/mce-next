@@ -15,6 +15,7 @@
 				]
 			},
 			"background_colour": {
+				"key": "23888234-62c3-47b4-9ae3-ca9b3b38e9c9",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "DocumentLink",
@@ -22,6 +23,7 @@
 				}
 			},
 			"text_colour": {
+				"key": "e715cb52-240b-41d0-ab95-02b1f198c090",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "DocumentLink",
@@ -32,8 +34,57 @@
 				"__TYPE__": "FieldContent",
 				"value": "92",
 				"type": "Number"
+			},
+			"heading": {
+				"__TYPE__": "FieldContent",
+				"value": "metal",
+				"type": "Text"
 			}
 		},
 		"items": []
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "richText",
+		"primary": {
+			"rich_text": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Esse dolore nostrud qui magna velit ad exercitation. Mollit dolor enim consectetur sit cupidatat do fugiat eiusmod duis adipisicing eiusmod fugiat aliquip id ut."
+						}
+					}
+				]
+			},
+			"background_colour": {
+				"key": "f9f4a0f6-0028-4d2f-af35-9685420ef826",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "DocumentLink",
+					"id": "mock_document_id"
+				}
+			},
+			"text_colour": {
+				"key": "3a76a5e3-f47d-4016-a687-26ea4c397e13",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "DocumentLink",
+					"id": "mock_document_id"
+				}
+			},
+			"padding_y": {
+				"__TYPE__": "FieldContent",
+				"value": "81",
+				"type": "Number"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
 	}
 ]

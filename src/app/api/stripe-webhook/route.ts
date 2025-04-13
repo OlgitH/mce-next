@@ -42,7 +42,7 @@ async function saveToSpreadsheet(session: any) {
     const customerEmail = session.customer_details?.email || "No email"; // Extract customer email
     const customerPhone = session.customer_details?.phone || "No phone";
     const tourType = session.metadata?.tour || "Unknown"; // Assuming 'tour' metadata field is present
-    const tourDate = session.metadata?.date || "Unknown"; // Assuming 'date' metadata field is present
+    const bookingDate = new Date().toLocaleDateString("en-GB");
     const sessionId = session.id || "N/A"; // Default fallback if not present
 
     // Create the row of values to append to the sheet
@@ -52,7 +52,7 @@ async function saveToSpreadsheet(session: any) {
         customerEmail,
         customerPhone,
         tourType,
-        tourDate,
+        bookingDate,
         sessionId,
       ],
     ];

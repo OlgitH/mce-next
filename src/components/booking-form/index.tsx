@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import rawCountryCodes from "@/lib/countryCodes.json";
+import Select from "react-select";
 
-// Translation object
 const translations = {
   en: {
     bookingTitle: "Book Now",
@@ -12,8 +12,8 @@ const translations = {
     phone: "Telephone",
     tour: "Tour",
     selectTour: "Select a Tour",
-    selectDate: "Select Date",
     submit: "Book Now",
+    footer: "If you prefer to pay by bank transfer contact:",
   },
   es: {
     bookingTitle: "Reservar ahora",
@@ -23,69 +23,87 @@ const translations = {
     phone: "Teléfono",
     tour: "Tour",
     selectTour: "Selecciona un tour",
-    selectDate: "Selecciona una fecha",
     submit: "Reservar",
+    footer: "Si prefiere pagar por transferencia de banco contacte",
   },
 };
 
-// Sanitize inputs to prevent XSS
 const sanitizeInput = (input: string) => {
   const div = document.createElement("div");
   div.textContent = input;
   return div.innerHTML;
 };
 
-// Helper to determine locale (fallback to English)
 const getTranslation = (lang: string) =>
   lang?.startsWith("es") ? translations.es : translations.en;
 
 type BookingFormProps = {
-  tours: any[];
-  tourLink?: string;
+  tours: { reference: string; price: number }[];
   lang?: string;
 };
 
-export default function BookingForm({
-  tours,
-  tourLink,
-  lang = "en",
-}: BookingFormProps) {
+const getCountryOptions = () => {
+  const priority = ["GBR", "COL"];
+  return [
+    ...rawCountryCodes
+      .filter((c) => priority.includes(c.code))
+      .map((c) => ({
+        value: c.dial_code,
+        label: `${c.country} (${c.dial_code})`,
+      })),
+    ...rawCountryCodes
+      .filter((c) => !priority.includes(c.code))
+      .sort((a, b) => a.country.localeCompare(b.country))
+      .map((c) => ({
+        value: c.dial_code,
+        label: `${c.country} (${c.dial_code})`,
+      })),
+  ];
+};
+
+const InputField = ({
+  name,
+  label,
+  type = "text",
+  value,
+  onChange,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => (
+  <div className="flex-1">
+    <label htmlFor={name} className="block text-lg font-semibold mb-1">
+      {label}
+    </label>
+    <input
+      id={name}
+      name={name}
+      type={type}
+      value={value}
+      onChange={onChange}
+      className="w-full rounded px-3 py-2 border"
+      required
+    />
+  </div>
+);
+
+export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   const t = getTranslation(lang);
+  const countryOptions = getCountryOptions();
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    countryCode: "+44", // default UK country code
+    countryCode: "+44",
     tour: "",
-    date: "",
     price: 0,
   });
 
-  // Priority list for countries, GBR (United Kingdom) and CO (Colombia) should be on top
-  const priority = ["GBR", "COL"];
-
-  const countryCodes = [
-    // Prioritize specific countries first (GB for UK, CO for Colombia)
-    ...rawCountryCodes
-      .filter((c) => priority.includes(c.code))
-      .map((c) => ({
-        code: c.dial_code,
-        label: c.country,
-      })),
-
-    // Rest sorted alphabetically
-    ...rawCountryCodes
-      .filter((c) => !priority.includes(c.code))
-      .sort((a, b) => a.country.localeCompare(b.country))
-      .map((c) => ({
-        code: c.dial_code,
-        label: c.country,
-      })),
-  ];
-
-  // Handle form input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -93,7 +111,13 @@ export default function BookingForm({
     setFormData((prev) => ({ ...prev, [name]: sanitizeInput(value) }));
   };
 
-  // Handle tour selection
+  const handleCountryCodeChange = (selected: { value: string } | null) => {
+    setFormData((prev) => ({
+      ...prev,
+      countryCode: selected?.value || "+44",
+    }));
+  };
+
   const handleTourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTour = tours.find(
       (tour) => tour.reference === e.target.value
@@ -105,45 +129,25 @@ export default function BookingForm({
     }));
   };
 
-  // Validate before submit
   const validateForm = () => {
     const { firstName, lastName, email, phone, tour } = formData;
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validPhone = /^[0-9\s\-().]{6,20}$/.test(phone);
 
-    if (!firstName || !lastName || !email || !phone || !tour) {
-      alert("All fields are required.");
-      return false;
-    }
+    if (!firstName || !lastName || !email || !phone || !tour)
+      return alert("All fields are required.");
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-
-    // Phone allows digits, spaces, dashes, dots, parentheses
-    const phonePattern = /^[0-9\s\-().]{6,20}$/;
-    if (!phonePattern.test(phone)) {
-      alert("Please enter a valid phone number.");
-      return false;
-    }
-
+    if (!validEmail) return alert("Invalid email address.");
+    if (!validPhone) return alert("Invalid phone number.");
     return true;
   };
 
-  // Submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     const fullPhone = `${formData.countryCode}${formData.phone.replace(/\s+/g, "")}`;
-
-    const submissionData = {
-      ...formData,
-      phone: fullPhone,
-    };
-
-    console.log("Submitting tour reference:", formData.tour); // Debugging log
+    const submissionData = { ...formData, phone: fullPhone };
 
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -156,103 +160,95 @@ export default function BookingForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex justify-center">
-        <h2 className="text-3xl">{t.bookingTitle}</h2>
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-4xl text-center font-bold mb-6">{t.bookingTitle}</h2>
 
-      <div className="form-row flex gap-4">
-        <div className="left-col">
-          <label className="text-lg block mb-1" htmlFor="firstName">
-            {t.firstName}
-          </label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="right-col">
-          <label className="text-lg block mb-1" htmlFor="lastName">
-            {t.lastName}
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="form-row">
-        <label className="text-lg block mb-1" htmlFor="email">
-          {t.email}
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
+      <div className="flex gap-4">
+        <InputField
+          name="firstName"
+          label={t.firstName}
+          value={formData.firstName}
           onChange={handleChange}
-          required
+        />
+        <InputField
+          name="lastName"
+          label={t.lastName}
+          value={formData.lastName}
+          onChange={handleChange}
         />
       </div>
 
-      <div className="form-row">
-        <label className="text-lg block mb-1" htmlFor="phone">
-          {t.phone}
-        </label>
+      <InputField
+        name="email"
+        label={t.email}
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+      />
+
+      <div>
+        <label className="block text-lg font-semibold mb-1">{t.phone}</label>
         <div className="flex gap-2">
-          <select
-            name="countryCode"
-            value={formData.countryCode}
-            onChange={handleChange}
-            className="border px-2 py-1"
-            required
-          >
-            {countryCodes.map(({ code, label }) => (
-              <option key={code} value={code}>
-                {label} ({code})
-              </option>
-            ))}
-          </select>
+          <div className="w-1/3">
+            <Select
+              options={countryOptions}
+              defaultValue={countryOptions.find(
+                (opt) => opt.value === formData.countryCode
+              )}
+              onChange={handleCountryCodeChange}
+              className="react-select-container"
+              classNamePrefix="react-select"
+            />
+          </div>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            className="flex-grow rounded px-3 py-2 border"
             placeholder="e.g. 612345678"
             required
-            className="flex-grow"
           />
         </div>
       </div>
 
-      <div className="form-row">
-        <label className="text-lg block mb-1" htmlFor="tour">
+      <div>
+        <label htmlFor="tour" className="block text-lg font-semibold mb-1">
           {t.selectTour}
         </label>
         <select
           name="tour"
           value={formData.tour}
           onChange={handleTourChange}
+          className="w-full rounded px-3 py-2 border"
           required
         >
           <option value="">{t.selectTour}</option>
-          {tours.map((tour, i) => (
+          {tours.map((tour) => (
             <option key={tour.reference} value={tour.reference}>
-              {tour.reference} - ${tour.price}
+              {tour.reference} - £{tour.price}
             </option>
           ))}
         </select>
       </div>
 
-      <button type="submit" className="bg-black text-white px-6 py-2 rounded">
+      <button
+        type="submit"
+        className="w-full bg-black text-white py-3 text-lg rounded hover:bg-gray-900 transition"
+      >
         {t.submit}
       </button>
+      <footer>
+        <p>
+          <b>{t.footer}</b>,{" "}
+          <a
+            href="mailto:info@magiccoffeeexpedition.co.uk"
+            className="underline"
+          >
+            <b>info@magiccoffeeexpedition.co.uk</b>
+          </a>
+        </p>
+      </footer>
     </form>
   );
 }

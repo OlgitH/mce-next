@@ -65,6 +65,10 @@
 			"full_height": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"show_social_links": {
+				"__TYPE__": "BooleanContent",
+				"value": false
 			}
 		},
 		"items": []

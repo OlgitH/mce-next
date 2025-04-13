@@ -2,7 +2,7 @@ import { Content, ContentRelationshipField } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import CoverImage from "@/components/cover-image";
-
+import Socials from "@/components/socials/basic";
 /**
  * Props for `Banner`.
  */
@@ -66,7 +66,8 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
               ),
             }}
           />
-          {context?.bookingLink?.url && (
+          {slice.primary.show_social_links && <Socials />}
+          {/* {context?.bookingLink?.url && (
             <button
               className="text-2xl py-2 px-4 border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
               style={{
@@ -81,7 +82,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
                 Book now
               </a>
             </button>
-          )}
+          )} */}
         </div>
       </CoverImage>
     </section>

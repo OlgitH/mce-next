@@ -22,6 +22,7 @@ type TextColourField = ContentRelationshipField<"text_colour"> & {
 const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
   const bgColourField = slice.primary.background_colour as BrandColourField;
   const colourField = slice.primary.text_colour as BrandColourField;
+  console.log(slice.primary);
 
   return (
     <section
@@ -34,19 +35,23 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
         paddingBottom: slice.primary.padding_y ?? 20,
       }}
     >
-      <div className="container px-4">
-        {" "}
-        <PrismicRichText
-          field={slice.primary.text}
-          components={{
-            heading3: ({ children }: { children: React.ReactNode }) => (
-              <h3 className="text-2xl mb-6 last:mb-0 font-bold">{children}</h3>
-            ),
-            paragraph: ({ children }: { children: React.ReactNode }) => (
-              <p className="text-lg mb-6 last:mb-0 font-normal">{children}</p>
-            ),
-          }}
-        />
+      <div className="container px-4 py-40">
+        {slice.primary.heading && <h2>{slice.primary.heading}</h2>}
+
+        {slice.primary.text && <p>{slice.primary.text[0]?.text}</p>}
+        {slice.primary.rich_text && (
+          <PrismicRichText
+            field={slice.primary.rich_text}
+            components={{
+              heading2: ({ children }: { children: React.ReactNode }) => (
+                <h2 className="text-2xl mb-6 last:mb-0">{children}</h2>
+              ),
+              paragraph: ({ children }: { children: React.ReactNode }) => (
+                <p className="text-lg mb-6 last:mb-0 font-normal">{children}</p>
+              ),
+            }}
+          />
+        )}
       </div>
     </section>
   );

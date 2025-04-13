@@ -239,6 +239,7 @@ export type NavigationDocument<Lang extends string = string> =
   >;
 
 type PageDocumentDataSlicesSlice =
+  | TextSectionSlice
   | FeatureAreaSlice
   | TourSectionSlice
   | BannerSlice;
@@ -742,6 +743,17 @@ export interface BannerSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#boolean
    */
   full_height: prismic.BooleanField;
+
+  /**
+   * Show Social Links field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: banner.default.primary.show_social_links
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_social_links: prismic.BooleanField;
 }
 
 /**
@@ -986,6 +998,16 @@ export type ImageSlice = prismic.SharedSlice<"image", ImageSliceVariation>;
  */
 export interface TextSectionSliceDefaultPrimary {
   /**
+   * Heading field in *TextSection → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
    * Text field in *TextSection → Default → Primary*
    *
    * - **Field Type**: Rich Text
@@ -1040,9 +1062,69 @@ export type TextSectionSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *TextSection → Rich Text → Primary*
+ */
+export interface TextSectionSliceRichTextPrimary {
+  /**
+   * Rich Text field in *TextSection → Rich Text → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.richText.primary.rich_text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  rich_text: prismic.RichTextField;
+
+  /**
+   * Background Colour field in *TextSection → Rich Text → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.richText.primary.background_colour
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_colour: prismic.ContentRelationshipField<"brand_colour">;
+
+  /**
+   * Text Colour field in *TextSection → Rich Text → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.richText.primary.text_colour
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  text_colour: prismic.ContentRelationshipField<"brand_colour">;
+
+  /**
+   * PaddingY field in *TextSection → Rich Text → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text_section.richText.primary.padding_y
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  padding_y: prismic.NumberField;
+}
+
+/**
+ * Rich Text variation for TextSection Slice
+ *
+ * - **API ID**: `richText`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type TextSectionSliceRichText = prismic.SharedSliceVariation<
+  "richText",
+  Simplify<TextSectionSliceRichTextPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *TextSection*
  */
-type TextSectionSliceVariation = TextSectionSliceDefault;
+type TextSectionSliceVariation =
+  | TextSectionSliceDefault
+  | TextSectionSliceRichText;
 
 /**
  * TextSection Shared Slice
@@ -1352,8 +1434,10 @@ declare module "@prismicio/client" {
       ImageSliceLightSlate,
       TextSectionSlice,
       TextSectionSliceDefaultPrimary,
+      TextSectionSliceRichTextPrimary,
       TextSectionSliceVariation,
       TextSectionSliceDefault,
+      TextSectionSliceRichText,
       TourInfoSectionSlice,
       TourInfoSectionSliceDefaultPrimaryGalleryImagesItem,
       TourInfoSectionSliceDefaultPrimaryIncludedSectionItem,

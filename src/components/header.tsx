@@ -7,6 +7,7 @@ import { PrismicText } from "@prismicio/react";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { usePathname } from "next/navigation";
 import { Locale, Navigation, Settings } from "@/app/types";
+import Socials from "@/components/socials/basic";
 
 const localeLabels: { [key: string]: string } = {
   "en-gb": "EN",
@@ -95,12 +96,13 @@ export default function Header({ locales = [], navigation, settings }: Props) {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex space-x-4 items-center">
               {navigation.data?.links.map((item, i) => (
                 <PrismicNextLink key={i} field={item.link}>
                   <PrismicText field={item.label} />
                 </PrismicNextLink>
               ))}
+              <Socials size="small" />
             </div>
 
             {/* Language Switcher */}
