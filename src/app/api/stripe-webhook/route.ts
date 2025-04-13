@@ -40,7 +40,7 @@ async function saveToSpreadsheet(session: any) {
     // Extract necessary details from the session object
     const customerName = session.customer_details?.name || "No name"; // Extract customer name
     const customerEmail = session.customer_details?.email || "No email"; // Extract customer email
-    const customerPhone = session.customer_details?.phone || "No email";
+    const customerPhone = session.customer_details?.phone || "No phone";
     const tourType = session.metadata?.tour || "Unknown"; // Assuming 'tour' metadata field is present
     const tourDate = session.metadata?.date || "Unknown"; // Assuming 'date' metadata field is present
     const sessionId = session.id || "N/A"; // Default fallback if not present

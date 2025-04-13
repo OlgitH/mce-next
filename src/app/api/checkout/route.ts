@@ -44,6 +44,11 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/cancel`,
+      customer_email: body.email, // Include email here
+      customer: {
+        name: `${body.firstName} ${body.lastName}`,
+        phone: body.phone, // Add phone number here
+      },
       metadata: {
         name: `${body.firstName} ${body.lastName}`,
         email: body.email,
