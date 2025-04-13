@@ -153,7 +153,7 @@ export default async function Tour({
         {/* Conditionally render the BookingForm only if dates are available */}
         {hasAvailableDates && (
           <section className="booking-section py-8 bg-emerald-900 text-cream">
-            <div className="container mx-auto flex justify-center">
+            <div className="container mx-auto px-4 sm:px-0 flex justify-center">
               <BookingForm tours={dates} lang={lang} />
             </div>
           </section>

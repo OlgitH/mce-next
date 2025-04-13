@@ -33,7 +33,7 @@ const TextSection = ({ slice }: TextSectionProps): JSX.Element => {
         paddingBottom: slice.primary.padding_y ?? 20,
       }}
     >
-      <div className="container px-4 py-40">
+      <div className="container px-4">
         {slice.variation === "default" ? (
           <>
             {slice.primary.heading && <h2>{slice.primary.heading}</h2>}
