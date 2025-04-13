@@ -688,7 +688,7 @@ export interface BannerSliceDefaultPrimary {
    * - **API ID Path**: banner.default.primary.background_image
    * - **Documentation**: https://prismic.io/docs/field#image
    */
-  background_image: prismic.ImageField<never>;
+  background_image: prismic.ImageField<"Mobile">;
 
   /**
    * Background Colour field in *Banner → Default → Primary*

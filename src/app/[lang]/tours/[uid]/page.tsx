@@ -78,6 +78,21 @@ export default async function Tour({
                     }
                   }
                 }
+                ...on richText {
+                  primary {
+                    ...primaryFields
+                    background_colour {
+                      ...on brand_colour {
+                         colour_code
+                      }
+                    }
+                    text_colour {
+                      ...on brand_colour {
+                         colour_code
+                      }
+                    }
+                  }
+                }
               }
             }
             ... on tour_info_section {

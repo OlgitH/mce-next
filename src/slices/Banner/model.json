@@ -25,8 +25,16 @@
           "type": "Image",
           "config": {
             "label": "Background Image",
-            "constraint": {},
-            "thumbnails": []
+            "constraint": {
+              "width": 1800
+            },
+            "thumbnails": [
+              {
+                "name": "Mobile",
+                "width": 768,
+                "height": null
+              }
+            ]
           }
         },
         "background_colour": {

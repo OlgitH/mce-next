@@ -32,7 +32,7 @@ type Context = {
 const Banner = ({ slice, context }: BannerProps): JSX.Element => {
   const bgColourField = slice.primary.background_colour as BrandColourField;
   const textColourField = slice.primary.text_colour as BrandColourField;
-
+  console.log("BG...", bgColourField);
   return (
     <section
       data-slice-type={slice.slice_type}

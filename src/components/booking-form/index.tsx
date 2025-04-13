@@ -3,6 +3,7 @@ import { useState } from "react";
 import rawCountryCodes from "@/lib/countryCodes.json";
 import Select from "react-select";
 
+// Translation object for different languages
 const translations = {
   en: {
     bookingTitle: "Book Now",
@@ -28,20 +29,30 @@ const translations = {
   },
 };
 
+// Helper function to sanitize input (e.g., XSS protection)
 const sanitizeInput = (input: string) => {
   const div = document.createElement("div");
   div.textContent = input;
   return div.innerHTML;
 };
 
+// Translation getter function based on language
 const getTranslation = (lang: string) =>
   lang?.startsWith("es") ? translations.es : translations.en;
 
+// Type definition for `tour` (reference and price)
+type Tour = {
+  reference: string | null;
+  price: number | null;
+};
+
+// Type for the props passed to `BookingForm`
 type BookingFormProps = {
-  tours: { reference: string; price: number }[];
+  tours: Tour[]; // Tours must be an array of Tour objects
   lang?: string;
 };
 
+// Helper function to get country options from raw country data
 const getCountryOptions = () => {
   const priority = ["GBR", "COL"];
   return [
@@ -61,6 +72,7 @@ const getCountryOptions = () => {
   ];
 };
 
+// InputField component for handling text inputs
 const InputField = ({
   name,
   label,
@@ -90,10 +102,12 @@ const InputField = ({
   </div>
 );
 
+// Main BookingForm component
 export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   const t = getTranslation(lang);
   const countryOptions = getCountryOptions();
 
+  // State for form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -104,6 +118,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     price: 0,
   });
 
+  // Handle changes in form fields
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -111,6 +126,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     setFormData((prev) => ({ ...prev, [name]: sanitizeInput(value) }));
   };
 
+  // Handle change for country code (dial code)
   const handleCountryCodeChange = (selected: { value: string } | null) => {
     setFormData((prev) => ({
       ...prev,
@@ -118,10 +134,13 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     }));
   };
 
+  // Handle change for selected tour
   const handleTourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTour = tours.find(
       (tour) => tour.reference === e.target.value
     );
+
+    // If selectedTour is found, update the state
     setFormData((prev) => ({
       ...prev,
       tour: selectedTour?.reference || "",
@@ -129,6 +148,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     }));
   };
 
+  // Validate form fields
   const validateForm = () => {
     const { firstName, lastName, email, phone, tour } = formData;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -142,6 +162,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     return true;
   };
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -224,8 +245,8 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
           required
         >
           <option value="">{t.selectTour}</option>
-          {tours.map((tour) => (
-            <option key={tour.reference} value={tour.reference}>
+          {tours.map((tour, i) => (
+            <option key={`tour-${i}`} value={tour.reference ?? undefined}>
               {tour.reference} - £{tour.price}
             </option>
           ))}

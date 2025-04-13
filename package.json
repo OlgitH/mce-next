@@ -18,6 +18,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@prismicio/client": "^7.5.0",
+    "@prismicio/helpers": "^2.3.9",
     "@prismicio/next": "^1.6.0",
     "@prismicio/react": "^2.8.0",
     "classnames": "^2.5.1",
