@@ -63,10 +63,11 @@ export default function BookingForm({
     price: 0,
   });
 
+  // Priority list for countries, GBR (United Kingdom) and CO (Colombia) should be on top
   const priority = ["GB", "CO", "US", "FR", "DE", "IT", "ES", "NL"];
 
   const countryCodes = [
-    // Priority countries first
+    // Prioritize specific countries first (GB for UK, CO for Colombia)
     ...rawCountryCodes
       .filter((c) => priority.includes(c.code))
       .map((c) => ({

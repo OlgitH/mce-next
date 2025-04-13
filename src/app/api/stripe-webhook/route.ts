@@ -40,19 +40,27 @@ async function saveToSpreadsheet(session: any) {
     // Extract necessary details from the session object
     const customerName = session.customer_details?.name || "No name"; // Extract customer name
     const customerEmail = session.customer_details?.email || "No email"; // Extract customer email
+    const customerPhone = session.customer_details?.phone || "No email";
     const tourType = session.metadata?.tour || "Unknown"; // Assuming 'tour' metadata field is present
     const tourDate = session.metadata?.date || "Unknown"; // Assuming 'date' metadata field is present
     const sessionId = session.id || "N/A"; // Default fallback if not present
 
     // Create the row of values to append to the sheet
     const values = [
-      [customerName, customerEmail, tourType, tourDate, sessionId],
+      [
+        customerName,
+        customerEmail,
+        customerPhone,
+        tourType,
+        tourDate,
+        sessionId,
+      ],
     ];
 
     // Append values to Google Sheets
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: GOOGLE_SHEET_ID, // Spreadsheet ID
-      range: "Bookings!A2:E", // Specify the range for the sheet (starting from A2 to E)
+      range: "Bookings!A2:F", // Specify the range for the sheet (starting from A2 to E)
       requestBody: {
         values,
       },
