@@ -33,7 +33,14 @@
         "price": {
           "type": "Number",
           "config": {
-            "label": "Price",
+            "label": "Price (Adults)",
+            "placeholder": ""
+          }
+        },
+        "price_children": {
+          "type": "Number",
+          "config": {
+            "label": "Price (Children)",
             "placeholder": ""
           }
         },

@@ -27,7 +27,7 @@
 			},
 			"price": {
 				"__TYPE__": "FieldContent",
-				"value": "1",
+				"value": "26",
 				"type": "Number"
 			},
 			"included_section": {
@@ -93,7 +93,6 @@
 							[
 								"image",
 								{
-									"__TYPE__": "ImageContent",
 									"origin": {
 										"id": "main",
 										"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
@@ -111,12 +110,20 @@
 										},
 										"background": "transparent"
 									},
+									"credits": null,
+									"alt": null,
+									"__TYPE__": "ImageContent",
 									"thumbnails": {}
 								}
 							]
 						]
 					}
 				]
+			},
+			"price_children": {
+				"__TYPE__": "FieldContent",
+				"value": "53",
+				"type": "Number"
 			}
 		},
 		"items": []

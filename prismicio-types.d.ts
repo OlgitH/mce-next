@@ -1203,7 +1203,7 @@ export interface TourInfoSectionSliceDefaultPrimary {
   dates: prismic.RichTextField;
 
   /**
-   * Price field in *TourInfoSection → Default → Primary*
+   * Price (Adults) field in *TourInfoSection → Default → Primary*
    *
    * - **Field Type**: Number
    * - **Placeholder**: *None*
@@ -1211,6 +1211,16 @@ export interface TourInfoSectionSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#number
    */
   price: prismic.NumberField;
+
+  /**
+   * Price (Children) field in *TourInfoSection → Default → Primary*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour_info_section.default.primary.price_children
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  price_children: prismic.NumberField;
 
   /**
    * Gallery Images field in *TourInfoSection → Default → Primary*

@@ -127,14 +127,23 @@ const TourInfoSection = ({
           </div>
 
           <div className="mb-10">
-            <h2>
-              {locale === "es-co"
-                ? "Precio"
-                : locale === "en-gb"
-                  ? "Price"
-                  : "Price"}
-            </h2>
-            <p>£{slice.primary.price} per person</p>
+            {slice.primary.price && (
+              <>
+                <h2>
+                  {locale === "es-co"
+                    ? "Precio"
+                    : locale === "en-gb"
+                      ? "Price"
+                      : "Price"}
+                </h2>
+                <p className="mb-4">
+                  Adults: £{slice.primary.price} per person
+                </p>
+              </>
+            )}
+            {slice.primary.price_children && (
+              <p>Children: £{slice.primary.price_children} per person</p>
+            )}
           </div>
           <div className="mb-10">
             <h2>
