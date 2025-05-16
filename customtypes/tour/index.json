@@ -67,6 +67,13 @@
                 "label": "End",
                 "placeholder": ""
               }
+            },
+            "stripe_product_id": {
+              "type": "Text",
+              "config": {
+                "label": "Stripe product ID",
+                "placeholder": ""
+              }
             }
           }
         }

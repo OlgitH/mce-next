@@ -2,22 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-04-10" as any, // Explicit cast to bypass type checking
+  apiVersion: "2024-04-10" as any,
 });
 
 export async function POST(req: NextRequest) {
-  console.log("✅ API HIT: /api/checkout"); // Debugging log
+  console.log("✅ API HIT: /api/checkout");
 
   try {
     const body = await req.json();
     console.log("Received booking data:", body);
 
+    const { firstName, lastName, email, phone, tickets } = body;
+
     if (
-      !body.tour ||
-      !body.firstName ||
-      !body.lastName ||
-      !body.email ||
-      !body.phone
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !tickets ||
+      !tickets.length
     ) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -27,32 +30,31 @@ export async function POST(req: NextRequest) {
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: "gbp",
-            product_data: {
-              name: body.tour,
-            },
-            unit_amount: body.price * 100,
-          },
-          quantity: 1,
+    const lineItems = tickets.map((ticket: any) => ({
+      price_data: {
+        currency: "gbp",
+        product_data: {
+          name: ticket.reference,
         },
-      ],
+        unit_amount: Math.round(ticket.price * 100),
+      },
+      quantity: ticket.quantity,
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: lineItems,
       mode: "payment",
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/cancel`,
-      customer_email: body.email,
+      customer_email: email,
       phone_number_collection: {
         enabled: true,
       },
       metadata: {
-        name: `${body.firstName} ${body.lastName}`,
-        email: body.email,
-        phone: body.phone, // stored, but not shown in customer_details
-        tour: body.tour,
-        date: body.date,
+        name: `${firstName} ${lastName}`,
+        email,
+        phone,
+        tickets: JSON.stringify(tickets),
       },
     });
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import rawCountryCodes from "@/lib/countryCodes.json";
 import Select from "react-select";
 
-// Translation object for different languages
+// Translation object
 const translations = {
   en: {
     bookingTitle: "Book Now",
@@ -12,7 +12,7 @@ const translations = {
     email: "Email",
     phone: "Telephone",
     tour: "Tour",
-    selectTour: "Select a Tour",
+    selectTour: "Select Tickets",
     submit: "Book Now",
     footer: "If you prefer to pay by bank transfer contact:",
   },
@@ -23,36 +23,31 @@ const translations = {
     email: "Correo electrónico",
     phone: "Teléfono",
     tour: "Tour",
-    selectTour: "Selecciona un tour",
+    selectTour: "Selecciona entradas",
     submit: "Reservar",
     footer: "Si prefiere pagar por transferencia de banco contacte",
   },
 };
 
-// Helper function to sanitize input (e.g., XSS protection)
 const sanitizeInput = (input: string) => {
   const div = document.createElement("div");
   div.textContent = input;
   return div.innerHTML;
 };
 
-// Translation getter function based on language
 const getTranslation = (lang: string) =>
   lang?.startsWith("es") ? translations.es : translations.en;
 
-// Type definition for `tour` (reference and price)
 type Tour = {
   reference: string | null;
   price: number | null;
 };
 
-// Type for the props passed to `BookingForm`
 type BookingFormProps = {
-  tours: Tour[]; // Tours must be an array of Tour objects
+  tours: Tour[];
   lang?: string;
 };
 
-// Helper function to get country options from raw country data
 const getCountryOptions = () => {
   const priority = ["GBR", "COL"];
   return [
@@ -72,7 +67,6 @@ const getCountryOptions = () => {
   ];
 };
 
-// InputField component for handling text inputs
 const InputField = ({
   name,
   label,
@@ -102,23 +96,22 @@ const InputField = ({
   </div>
 );
 
-// Main BookingForm component
 export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   const t = getTranslation(lang);
   const countryOptions = getCountryOptions();
 
-  // State for form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     countryCode: "+44",
-    tour: "",
-    price: 0,
   });
 
-  // Handle changes in form fields
+  const [selectedTickets, setSelectedTickets] = useState<
+    { reference: string; price: number; quantity: number }[]
+  >([]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -126,7 +119,6 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     setFormData((prev) => ({ ...prev, [name]: sanitizeInput(value) }));
   };
 
-  // Handle change for country code (dial code)
   const handleCountryCodeChange = (selected: { value: string } | null) => {
     setFormData((prev) => ({
       ...prev,
@@ -134,41 +126,35 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     }));
   };
 
-  // Handle change for selected tour
-  const handleTourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTour = tours.find(
-      (tour) => tour.reference === e.target.value
-    );
-
-    // If selectedTour is found, update the state
-    setFormData((prev) => ({
-      ...prev,
-      tour: selectedTour?.reference || "",
-      price: selectedTour?.price || 0,
-    }));
-  };
-
-  // Validate form fields
   const validateForm = () => {
-    const { firstName, lastName, email, phone, tour } = formData;
+    const { firstName, lastName, email, phone } = formData;
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const validPhone = /^[0-9\s\-().]{6,20}$/.test(phone);
 
-    if (!firstName || !lastName || !email || !phone || !tour)
+    if (!firstName || !lastName || !email || !phone)
       return alert("All fields are required.");
-
     if (!validEmail) return alert("Invalid email address.");
     if (!validPhone) return alert("Invalid phone number.");
+    if (selectedTickets.length === 0)
+      return alert("Please select at least one ticket.");
+
     return true;
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     const fullPhone = `${formData.countryCode}${formData.phone.replace(/\s+/g, "")}`;
-    const submissionData = { ...formData, phone: fullPhone };
+    const submissionData = {
+      ...formData,
+      phone: fullPhone,
+      tickets: selectedTickets,
+      totalPrice: selectedTickets.reduce(
+        (sum, ticket) => sum + ticket.price * ticket.quantity,
+        0
+      ),
+    };
 
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -234,23 +220,61 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
       </div>
 
       <div>
-        <label htmlFor="tour" className="block text-lg font-semibold mb-1">
+        <label className="block text-lg font-semibold mb-1">
           {t.selectTour}
         </label>
-        <select
-          name="tour"
-          value={formData.tour}
-          onChange={handleTourChange}
-          className="w-full rounded px-3 py-2 border"
-          required
-        >
-          <option value="">{t.selectTour}</option>
-          {tours.map((tour, i) => (
-            <option key={`tour-${i}`} value={tour.reference ?? undefined}>
-              {tour.reference} - £{tour.price}
-            </option>
-          ))}
-        </select>
+        {tours.map((tour, i) => (
+          <div key={i} className="flex items-center gap-4 mb-2">
+            <span className="w-1/2">
+              {tour.reference} (£{tour.price})
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={
+                selectedTickets.find((t) => t.reference === tour.reference)
+                  ?.quantity || 0
+              }
+              onChange={(e) => {
+                const quantity = parseInt(e.target.value, 10);
+                setSelectedTickets((prev) => {
+                  const existing = prev.find(
+                    (t) => t.reference === tour.reference
+                  );
+                  if (existing) {
+                    return quantity > 0
+                      ? prev.map((t) =>
+                          t.reference === tour.reference
+                            ? { ...t, quantity }
+                            : t
+                        )
+                      : prev.filter((t) => t.reference !== tour.reference);
+                  } else {
+                    return quantity > 0
+                      ? [
+                          ...prev,
+                          {
+                            reference: tour.reference!,
+                            price: tour.price!,
+                            quantity,
+                          },
+                        ]
+                      : prev;
+                  }
+                });
+              }}
+              className="w-16 border rounded px-2 py-1"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="text-right font-bold">
+        Total: £
+        {selectedTickets.reduce(
+          (total, ticket) => total + ticket.price * ticket.quantity,
+          0
+        )}
       </div>
 
       <button
@@ -259,6 +283,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
       >
         {t.submit}
       </button>
+
       <footer>
         <p>
           <b>{t.footer}</b>,{" "}

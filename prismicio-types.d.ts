@@ -515,6 +515,16 @@ export interface TourDocumentDataDatesItem {
    * - **Documentation**: https://prismic.io/docs/field#date
    */
   end: prismic.DateField;
+
+  /**
+   * Stripe product ID field in *Tour → Dates*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].stripe_product_id
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  stripe_product_id: prismic.KeyTextField;
 }
 
 type TourDocumentDataSlicesSlice =
