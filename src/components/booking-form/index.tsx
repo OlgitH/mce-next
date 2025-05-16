@@ -228,9 +228,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
             <span className="w-1/2">
               {tour.reference} (£{tour.price})
             </span>
-            <input
-              type="number"
-              min={0}
+            <select
               value={
                 selectedTickets.find((t) => t.reference === tour.reference)
                   ?.quantity || 0
@@ -263,8 +261,14 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
                   }
                 });
               }}
-              className="w-16 border rounded px-2 py-1"
-            />
+              className="border rounded px-2 py-1 w-20 text-center text-black"
+            >
+              {[...Array(6)].map((_, qty) => (
+                <option key={qty} value={qty}>
+                  {qty}
+                </option>
+              ))}
+            </select>
           </div>
         ))}
       </div>
