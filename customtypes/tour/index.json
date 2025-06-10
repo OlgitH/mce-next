@@ -47,10 +47,24 @@
                 "placeholder": ""
               }
             },
+            "price_children": {
+              "type": "Number",
+              "config": {
+                "label": "Price Children",
+                "placeholder": ""
+              }
+            },
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": ""
+              }
+            },
             "reference": {
               "type": "Text",
               "config": {
-                "label": "Reference",
+                "label": "Reference (for Stripe)",
                 "placeholder": ""
               }
             },

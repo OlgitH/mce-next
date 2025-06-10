@@ -41,8 +41,10 @@ export default async function Tour({
         tour {
           booking_link
           dates {
+            label
             reference
             price
+            price_children
             start
             end
           }

@@ -487,7 +487,27 @@ export interface TourDocumentDataDatesItem {
   price: prismic.NumberField;
 
   /**
-   * Reference field in *Tour → Dates*
+   * Price Children field in *Tour → Dates*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].price_children
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  price_children: prismic.NumberField;
+
+  /**
+   * Label field in *Tour → Dates*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.dates[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Reference (for Stripe) field in *Tour → Dates*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*

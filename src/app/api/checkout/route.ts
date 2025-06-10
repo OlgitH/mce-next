@@ -30,16 +30,42 @@ export async function POST(req: NextRequest) {
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-    const lineItems = tickets.map((ticket: any) => ({
-      price_data: {
-        currency: "gbp",
-        product_data: {
-          name: ticket.reference,
-        },
-        unit_amount: Math.round(ticket.price * 100),
-      },
-      quantity: ticket.quantity,
-    }));
+    // Convert each ticket into possibly 2 line items (adult + children)
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+
+    tickets.forEach((ticket: any) => {
+      if (ticket.quantityAdult > 0) {
+        lineItems.push({
+          price_data: {
+            currency: "gbp",
+            product_data: {
+              name: `${ticket.reference} (Adult)`,
+            },
+            unit_amount: Math.round(ticket.price * 100),
+          },
+          quantity: ticket.quantityAdult,
+        });
+      }
+      if (ticket.quantityChildren > 0) {
+        lineItems.push({
+          price_data: {
+            currency: "gbp",
+            product_data: {
+              name: `${ticket.reference} (Child)`,
+            },
+            unit_amount: Math.round((ticket.priceChildren ?? 0) * 100),
+          },
+          quantity: ticket.quantityChildren,
+        });
+      }
+    });
+
+    if (lineItems.length === 0) {
+      return NextResponse.json(
+        { error: "No tickets selected" },
+        { status: 400 }
+      );
+    }
 
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,

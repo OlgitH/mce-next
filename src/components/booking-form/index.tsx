@@ -3,7 +3,6 @@ import { useState } from "react";
 import rawCountryCodes from "@/lib/countryCodes.json";
 import Select from "react-select";
 
-// Translation object
 const translations = {
   en: {
     bookingTitle: "Book Now",
@@ -15,6 +14,8 @@ const translations = {
     selectTour: "Select Tickets",
     submit: "Book Now",
     footer: "If you prefer to pay by bank transfer contact:",
+    adultLabel: "Adults",
+    childrenLabel: "Children",
   },
   es: {
     bookingTitle: "Reservar ahora",
@@ -26,6 +27,8 @@ const translations = {
     selectTour: "Selecciona entradas",
     submit: "Reservar",
     footer: "Si prefiere pagar por transferencia de banco contacte",
+    adultLabel: "Adultos",
+    childrenLabel: "Niños",
   },
 };
 
@@ -40,7 +43,9 @@ const getTranslation = (lang: string) =>
 
 type Tour = {
   reference: string | null;
+  label: string | null;
   price: number | null;
+  price_children?: number | null;
 };
 
 type BookingFormProps = {
@@ -108,8 +113,16 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     countryCode: "+44",
   });
 
+  // Use quantityAdult and quantityChildren consistently
   const [selectedTickets, setSelectedTickets] = useState<
-    { reference: string; price: number; quantity: number }[]
+    {
+      reference: string;
+      label: string;
+      price: number;
+      quantityAdult: number;
+      quantityChildren: number;
+      priceChildren: number;
+    }[]
   >([]);
 
   const handleChange = (
@@ -124,6 +137,32 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
       ...prev,
       countryCode: selected?.value || "+44",
     }));
+  };
+  const getFullPhone = () =>
+    `${formData.countryCode}${formData.phone.replace(/\s+/g, "")}`;
+
+  // Centralized handler for quantity changes
+  const handleTicketQuantityChange = (
+    tour: Tour,
+    qty: number,
+    type: "adult" | "children"
+  ) => {
+    if (!tour.reference || tour.price === null) return;
+
+    const reference = tour.reference; // now reference is string
+    const fullPhone = getFullPhone();
+    const submissionData = {
+      ...formData,
+      phone: fullPhone,
+      tickets: selectedTickets,
+      totalPrice: selectedTickets.reduce(
+        (sum, ticket) =>
+          sum +
+          ticket.price * ticket.quantityAdult +
+          (ticket.priceChildren || 0) * ticket.quantityChildren,
+        0
+      ),
+    };
   };
 
   const validateForm = () => {
@@ -145,13 +184,16 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const fullPhone = `${formData.countryCode}${formData.phone.replace(/\s+/g, "")}`;
+    const fullPhone = getFullPhone();
     const submissionData = {
       ...formData,
       phone: fullPhone,
       tickets: selectedTickets,
       totalPrice: selectedTickets.reduce(
-        (sum, ticket) => sum + ticket.price * ticket.quantity,
+        (sum, ticket) =>
+          sum +
+          ticket.price * ticket.quantityAdult +
+          (ticket.priceChildren || 0) * ticket.quantityChildren,
         0
       ),
     };
@@ -223,60 +265,68 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
         <label className="block text-lg font-semibold mb-1">
           {t.selectTour}
         </label>
-        {tours.map((tour, i) => (
-          <div key={i} className="flex items-center gap-4 mb-2">
-            <span className="w-1/2">
-              {tour.reference} (£{tour.price})
-            </span>
-            <select
-              value={
-                selectedTickets.find((t) => t.reference === tour.reference)
-                  ?.quantity || 0
-              }
-              onChange={(e) => {
-                const quantity = parseInt(e.target.value, 10);
-                setSelectedTickets((prev) => {
-                  const existing = prev.find(
-                    (t) => t.reference === tour.reference
-                  );
-                  if (existing) {
-                    return quantity > 0
-                      ? prev.map((t) =>
-                          t.reference === tour.reference
-                            ? { ...t, quantity }
-                            : t
-                        )
-                      : prev.filter((t) => t.reference !== tour.reference);
-                  } else {
-                    return quantity > 0
-                      ? [
-                          ...prev,
-                          {
-                            reference: tour.reference!,
-                            price: tour.price!,
-                            quantity,
-                          },
-                        ]
-                      : prev;
-                  }
-                });
-              }}
-              className="border rounded px-2 py-1 w-20 text-center text-black"
-            >
-              {[...Array(6)].map((_, qty) => (
-                <option key={qty} value={qty}>
-                  {qty}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
+        {tours.map((tour, i) => {
+          const existing = selectedTickets.find(
+            (t) => t.reference === tour.reference
+          );
+          return (
+            <div key={i} className="flex flex-col gap-2 my-10">
+              <span className="font-semibold text-lg">{tour.label}</span>
+              <div className="flex gap-4 items-center">
+                <label className="flex items-center gap-2">
+                  {t.adultLabel}:
+                  <select
+                    value={existing?.quantityAdult || 0}
+                    onChange={(e) =>
+                      handleTicketQuantityChange(
+                        tour,
+                        parseInt(e.target.value, 10),
+                        "adult"
+                      )
+                    }
+                    className="border rounded px-2 py-1 w-20 text-center text-black"
+                  >
+                    {[...Array(6)].map((_, qty) => (
+                      <option key={qty} value={qty}>
+                        {qty}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="flex items-center gap-2">
+                  {t.childrenLabel}:
+                  <select
+                    value={existing?.quantityChildren || 0}
+                    onChange={(e) =>
+                      handleTicketQuantityChange(
+                        tour,
+                        parseInt(e.target.value, 10),
+                        "children"
+                      )
+                    }
+                    className="border rounded px-2 py-1 w-20 text-center text-black"
+                  >
+                    {[...Array(6)].map((_, qty) => (
+                      <option key={qty} value={qty}>
+                        {qty}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="text-right font-bold">
+      <div className="text-right font-bold text-xl">
         Total: £
         {selectedTickets.reduce(
-          (total, ticket) => total + ticket.price * ticket.quantity,
+          (total, ticket) =>
+            total +
+            ticket.price * ticket.quantityAdult +
+            (ticket.priceChildren || 0) * ticket.quantityChildren,
           0
         )}
       </div>
