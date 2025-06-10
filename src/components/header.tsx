@@ -95,6 +95,11 @@ export default function Header({ locales = [], navigation, settings }: Props) {
               </PrismicNextLink>
             </div>
 
+            {/* Mobile Centered Title */}
+            <h2 className="flex-1 text-center md:hidden text-cream uppercase text-lg">
+              MAGIC COFFEE EXPEDITION
+            </h2>
+
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-4 items-center">
               {navigation.data?.links.map((item, i) => (
@@ -152,20 +157,24 @@ export default function Header({ locales = [], navigation, settings }: Props) {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out z-40`}
         >
-          <div className="flex flex-col p-4 space-y-4">
+          <ul className="flex flex-col p-4 space-y-4 list-none m-0">
             {navigation.data?.links.map((item, index) => (
               <li
                 key={index}
                 className="font-semibold tracking-tight text-slate-800"
               >
-                <PrismicNextLink field={item.link}>
+                <PrismicNextLink
+                  field={item.link}
+                  className="block w-full py-2 px-3 hover:bg-gray-100 rounded"
+                >
                   <PrismicText field={item.label} />
                 </PrismicNextLink>
               </li>
             ))}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <ul className="flex flex-wrap gap-3 pl-4">
+          </ul>
+
+          <div className="flex flex-wrap gap-3 p-4">
+            <ul className="flex flex-wrap gap-3 list-none m-0">
               {locales.map((locale) => (
                 <li key={locale.lang} className="first:font-semibold">
                   <PrismicNextLink
