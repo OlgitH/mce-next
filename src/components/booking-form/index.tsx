@@ -150,6 +150,10 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
     if (!tour.reference || tour.price === null) return;
 
     setSelectedTickets((prev) => {
+      if (tour.reference === null || tour.price === null) {
+        // Defensive fallback, return previous state unchanged
+        return prev;
+      }
       const index = prev.findIndex((t) => t.reference === tour.reference);
       const priceChildren = tour.price_children ?? 0;
 
