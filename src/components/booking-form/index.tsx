@@ -149,20 +149,44 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   ) => {
     if (!tour.reference || tour.price === null) return;
 
-    const reference = tour.reference; // now reference is string
-    const fullPhone = getFullPhone();
-    const submissionData = {
-      ...formData,
-      phone: fullPhone,
-      tickets: selectedTickets,
-      totalPrice: selectedTickets.reduce(
-        (sum, ticket) =>
-          sum +
-          ticket.price * ticket.quantityAdult +
-          (ticket.priceChildren || 0) * ticket.quantityChildren,
-        0
-      ),
-    };
+    setSelectedTickets((prev) => {
+      const index = prev.findIndex((t) => t.reference === tour.reference);
+      const priceChildren = tour.price_children ?? 0;
+
+      if (index > -1) {
+        // Update existing ticket
+        const updated = [...prev];
+        const ticket = updated[index];
+        updated[index] = {
+          ...ticket,
+          quantityAdult: type === "adult" ? qty : ticket.quantityAdult,
+          quantityChildren: type === "children" ? qty : ticket.quantityChildren,
+          priceChildren,
+        };
+        // If both quantities are zero, remove ticket from list
+        if (
+          updated[index].quantityAdult === 0 &&
+          updated[index].quantityChildren === 0
+        ) {
+          updated.splice(index, 1);
+        }
+        return updated;
+      } else {
+        // Add new ticket if qty > 0
+        if (qty === 0) return prev;
+        return [
+          ...prev,
+          {
+            reference: tour.reference,
+            label: tour.label || "",
+            price: tour.price,
+            quantityAdult: type === "adult" ? qty : 0,
+            quantityChildren: type === "children" ? qty : 0,
+            priceChildren,
+          },
+        ];
+      }
+    });
   };
 
   const validateForm = () => {
