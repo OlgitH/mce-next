@@ -24,7 +24,7 @@ const translations = {
     email: "Correo electrónico",
     phone: "Teléfono",
     tour: "Tour",
-    selectTour: "Selecciona entradas",
+    selectTour: "Selecciona ticketes",
     submit: "Reservar",
     footer: "Si prefiere pagar por transferencia de banco contacte",
     adultLabel: "Adultos",
@@ -155,7 +155,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
         return prev;
       }
       const index = prev.findIndex((t) => t.reference === tour.reference);
-      const priceChildren = tour.price_children ?? 0;
+      const priceChildren = tour.price_children ?? tour.price;
 
       if (index > -1) {
         // Update existing ticket
@@ -221,7 +221,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
         (sum, ticket) =>
           sum +
           ticket.price * ticket.quantityAdult +
-          (ticket.priceChildren || 0) * ticket.quantityChildren,
+          (ticket.priceChildren || ticket.price) * ticket.quantityChildren,
         0
       ),
     };
@@ -354,7 +354,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
           (total, ticket) =>
             total +
             ticket.price * ticket.quantityAdult +
-            (ticket.priceChildren || 0) * ticket.quantityChildren,
+            (ticket.priceChildren || ticket.price) * ticket.quantityChildren,
           0
         )}
       </div>
