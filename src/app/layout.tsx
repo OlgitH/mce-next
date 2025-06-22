@@ -1,4 +1,5 @@
 import { Sigmar, Libre_Baskerville, Lato } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.scss";
 
 const sigmar = Sigmar({
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="overflow-x-hidden antialiased min-h-screen">
         {children}
         <PrismicPreview repositoryName={repositoryName} />
+        <GoogleAnalytics gaId="G-MD3KMX44Z1" />
       </body>
     </html>
   );
