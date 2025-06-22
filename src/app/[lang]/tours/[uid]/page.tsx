@@ -16,13 +16,27 @@ export async function generateMetadata({
 
   try {
     const tour = await client.getByUID("tour", uid, { lang });
+
     return {
-      title: tour.data.title,
+      title: {
+        default: tour.data.meta_title || tour.data.title || "Tour",
+        template: "%s | Magic Coffee Expedition",
+      },
+      description: tour.data.meta_description || "",
+      alternates: {
+        canonical: `/${lang}/tours/${uid}`,
+        languages: {
+          "en-GB": `/en-gb/tours/${uid}`,
+          "es-CO": `/es-co/tours/${uid}`,
+        },
+      },
     };
   } catch (error) {
     console.error("Error fetching tour metadata:", error);
+
     return {
       title: "Tour not found",
+      description: "We couldn't find the tour you're looking for.",
     };
   }
 }

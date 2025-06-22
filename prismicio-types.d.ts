@@ -671,7 +671,27 @@ interface TourDocumentData {
    */
   opacity: prismic.SelectField<
     "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9"
-  >;
+  > /**
+   * Meta Title field in *Tour*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.meta_title
+   * - **Tab**: SEO
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Tour*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tour.meta_description
+   * - **Tab**: SEO
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
 }
 
 /**

@@ -14,9 +14,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const client = createClient();
   const page = await client.getByUID("page", "homepage", { lang });
+  console.log("meta title: ", page.data.meta_title);
 
   return {
-    title: prismic.asText(page.data.title),
+    title: page.data.meta_title ?? prismic.asText(page.data.title),
+    description: page.data.meta_description ?? "",
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_URL ?? "https://magiccoffeeexpedition.co.uk"
+    ),
+    alternates: {
+      canonical: "/",
+      languages: {
+        "en-GB": "/en-gb",
+        "de-CO": "/es-co",
+      },
+    },
   };
 }
 
