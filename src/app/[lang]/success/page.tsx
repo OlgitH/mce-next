@@ -7,11 +7,11 @@ import { Layout } from "@/components/layout";
 import { components } from "@/slices";
 import { PageSectionField } from "@/app/types";
 import PageSection from "@/components/page-section";
-export async function generateMetadata({
-  params: { uid, lang },
-}: {
-  params: { uid: string; lang: string };
-}): Promise<Metadata> {
+type Props = {
+  params: Promise<{ lang: string }>;
+};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
   const client = createClient();
   const page = await client.getByUID("page", "success", { lang });
 
@@ -20,11 +20,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function SuccessPage({
-  params: { lang },
-}: {
-  params: { lang: string };
-}) {
+export default async function SuccessPage({ params }: Props) {
+  const { lang } = await params;
   const client = createClient();
 
   const features = await client.getAllByType("feature", { lang });

@@ -1,6 +1,6 @@
 import { SliceZone } from "@prismicio/react";
 import * as prismic from "@prismicio/client";
-import { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { getLocales } from "@/lib/getLocales";
 import { createClient } from "@/prismicio";
 import { Layout } from "@/components/layout";
@@ -8,11 +8,13 @@ import { components } from "@/slices";
 import { PageSectionField } from "@/app/types";
 import PageSection from "@/components/page-section";
 
-export async function generateMetadata({
-  params: { uid, lang },
-}: {
-  params: { uid: string; lang: string };
-}): Promise<Metadata> {
+type Props = {
+  params: Promise<{ uid: string; lang: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { uid, lang } = await params;
+
   const client = createClient();
   const page = await client.getByUID("page", uid, { lang });
 
@@ -21,11 +23,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params: { uid, lang },
-}: {
-  params: { uid: string; lang: string };
-}) {
+export default async function Page({ params }: Props) {
+  const { uid, lang } = await params;
+
   const client = createClient();
 
   const page = await client.getByUID("page", uid, {
@@ -41,67 +41,60 @@ export default async function Page({
               }
             }
             slices {
-
               ... on text_section {
-                  variation {
-                    ...on default {
-                      primary {
-                        ...primaryFields
-                      }
+                variation {
+                  ...on default {
+                    primary {
+                      ...primaryFields
                     }
                   }
+                }
               }
-
               ... on tour_section {
-                  variation {
-                    ...on default {
-                      primary {
-                        ...primaryFields
-                        tours {
-                          tour {
-                            ...tourFields
-                          }
+                variation {
+                  ...on default {
+                    primary {
+                      ...primaryFields
+                      tours {
+                        tour {
+                          ...tourFields
                         }
                       }
                     }
                   }
                 }
-
-              
+              }
               ...on banner {
-                  variation {
-                    ...on default {
-                      primary {
-                        ...primaryFields
-                        background_colour {
-                          ...on brand_colour {
-                            colour_code
-                          }
+                variation {
+                  ...on default {
+                    primary {
+                      ...primaryFields
+                      background_colour {
+                        ...on brand_colour {
+                          colour_code
                         }
                       }
                     }
                   }
                 }
-
-                ... on feature_list {
-                  variation {
-                    ...on default {
-                      primary {
-                        featured_items {
-                          featured_item {
-                            ...featured_itemFields
-                          }
+              }
+              ... on feature_list {
+                variation {
+                  ...on default {
+                    primary {
+                      featured_items {
+                        featured_item {
+                          ...featured_itemFields
                         }
                       }
                     }
                   }
                 }
-
+              }
             }
           }
         }
         slices {
-
           ...on banner {
             variation {
               ...on default {
@@ -109,14 +102,13 @@ export default async function Page({
                   ...primaryFields
                   background_colour {
                     ...on brand_colour {
-                       colour_code
+                      colour_code
                     }
                   }
                 }
               }
             }
           }
-
           ... on tour_section {
             variation {
               ...on default {
@@ -141,8 +133,6 @@ export default async function Page({
               }
             }
           }
-
-      
           ... on feature_area {
             variation {
               ...on default {
@@ -152,12 +142,11 @@ export default async function Page({
               }
             }
           }
-        
-  
         }
       }
     }`,
   });
+
   const navigation = await client.getSingle("navigation", { lang });
   const settings = await client.getSingle("settings", { lang });
   const locales = await getLocales(page, client);
@@ -171,24 +160,24 @@ export default async function Page({
     >
       {/* Page slices */}
       <SliceZone slices={page.data.slices} components={components} />
+
       {/* Page sections */}
-      {page.data.page_sections &&
-        page.data.page_sections.map((item, i) => {
-          const pageSectionField = item.page_section as PageSectionField;
-          return (
-            <PageSection
-              key={i}
-              bgColour={
-                pageSectionField.data?.background_colour.data.colour_code ?? ""
-              }
-            >
-              <SliceZone
-                slices={pageSectionField.data?.slices}
-                components={components}
-              />
-            </PageSection>
-          );
-        })}
+      {page.data.page_sections?.map((item, i) => {
+        const pageSectionField = item.page_section as PageSectionField;
+        return (
+          <PageSection
+            key={i}
+            bgColour={
+              pageSectionField.data?.background_colour.data.colour_code ?? ""
+            }
+          >
+            <SliceZone
+              slices={pageSectionField.data?.slices}
+              components={components}
+            />
+          </PageSection>
+        );
+      })}
     </Layout>
   );
 }
@@ -201,10 +190,8 @@ export async function generateStaticParams() {
     filters: [prismic.filter.not("my.page.uid", "homepage")],
   });
 
-  return pages.map((page) => {
-    return {
-      uid: page.uid,
-      lang: page.lang,
-    };
-  });
+  return pages.map((page) => ({
+    uid: page.uid,
+    lang: page.lang,
+  }));
 }

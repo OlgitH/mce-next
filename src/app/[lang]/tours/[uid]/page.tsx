@@ -7,11 +7,12 @@ import { Layout } from "@/components/layout";
 import { components } from "@/slices";
 import BookingForm from "@/components/booking-form"; // Import the correct component
 
-export async function generateMetadata({
-  params: { uid, lang },
-}: {
-  params: { uid: string; lang: string };
-}): Promise<Metadata> {
+type Props = {
+  params: Promise<{ uid: string; lang: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { uid, lang } = await params;
   const client = createClient();
 
   try {
@@ -41,11 +42,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function Tour({
-  params: { uid, lang },
-}: {
-  params: { uid: string; lang: string };
-}) {
+export default async function Tour({ params }: Props) {
+  const { uid, lang } = await params;
   const client = createClient();
 
   try {
