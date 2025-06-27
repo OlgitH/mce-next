@@ -4,10 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import * as prismic from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
-import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
+import { PrismicNextLink } from "@prismicio/next";
 import { usePathname } from "next/navigation";
 import { Locale, Navigation, Settings } from "@/app/types";
 import Socials from "@/components/socials/basic";
+import Image from "next/image";
 
 const localeLabels: { [key: string]: string } = {
   "en-gb": "EN",
@@ -21,14 +22,12 @@ type Props = {
 };
 
 export default function Header({ locales = [], navigation, settings }: Props) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [currentLocale, setCurrentLocale] = useState<string>("");
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentLocale, setCurrentLocale] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -42,23 +41,19 @@ export default function Header({ locales = [], navigation, settings }: Props) {
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
   const pathname = usePathname();
 
-  // Find the current language by matching the pathname, but don't reorder the list
   useEffect(() => {
     const currentLanguage =
       locales.find(
         (locale) => pathname.startsWith(locale.url) || pathname === locale.url
-      )?.lang || "en-gb"; // Default to "en-gb" if no match is found
+      )?.lang || "en-gb";
     setCurrentLocale(currentLanguage);
   }, [pathname, locales]);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 60 || window.innerWidth < 600) {
@@ -71,6 +66,10 @@ export default function Header({ locales = [], navigation, settings }: Props) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const logoImage = prismic.isFilled.image(settings.data.logo)
+    ? settings.data.logo
+    : null;
 
   return (
     <header
@@ -85,11 +84,17 @@ export default function Header({ locales = [], navigation, settings }: Props) {
             <div className="flex-shrink-0 transition-all duration-300">
               <PrismicNextLink field={navigation.data?.links[0].link}>
                 <span className="sr-only">Go to homepage</span>
-                {prismic.isFilled.image(settings.data.logo) && (
-                  <PrismicNextImage
-                    field={settings.data.logo}
-                    alt={(settings.data.logo.alt as any) ?? ""}
-                    width={isScrolled ? 40 : 60} // Shrinks logo when scrolled
+                {logoImage && (
+                  <Image
+                    src={logoImage.url}
+                    alt={logoImage.alt ?? ""}
+                    width={isScrolled ? 40 : 60}
+                    height={
+                      ((isScrolled ? 40 : 60) *
+                        (logoImage.dimensions?.height ?? 1)) /
+                      (logoImage.dimensions?.width ?? 1)
+                    }
+                    priority
                   />
                 )}
               </PrismicNextLink>

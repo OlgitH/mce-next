@@ -1,7 +1,7 @@
 import cn from "classnames";
 import Link from "next/link";
-import { PrismicNextImage } from "@prismicio/next";
-import { ImageFieldImage } from "@prismicio/client";
+import Image from "next/image";
+import { isFilled, ImageFieldImage } from "@prismicio/client";
 
 type Props = {
   title?: string;
@@ -28,14 +28,21 @@ const CoverImage = ({
   opacity,
   overlay,
 }: Props) => {
-  const image = (
-    <PrismicNextImage field={src} className="object-cover object-center" fill />
-  );
+  const image = isFilled.image(src) ? (
+    <Image
+      src={src.url}
+      alt={alt || src.alt || ""}
+      fill
+      className="object-cover object-center"
+      sizes="100vw"
+      priority
+    />
+  ) : null;
 
   return (
     <>
-      <div className="sm:mx-0 z-0 w-full">
-        {slug ? (
+      <div className="sm:mx-0 z-0 w-full relative aspect-video">
+        {slug && image ? (
           <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
             {image}
           </Link>
@@ -46,6 +53,7 @@ const CoverImage = ({
 
       {overlay && (
         <>
+          {/* Example overlays */}
           {/* Full overlay */}
           {/* <div
             className="overlay w-full h-full absolute top-0 left-0 z-10"

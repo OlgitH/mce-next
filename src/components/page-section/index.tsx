@@ -1,17 +1,14 @@
-import * as prismic from "@prismicio/client";
-import { PrismicRichText } from "@/components/PrismicRichText";
-import { PrismicNextImage } from "@prismicio/next";
+import { ReactNode } from "react";
+
 type Props = {
-  children: any;
-  bgColour: any;
+  children: ReactNode;
+  bgColour: string;
 };
 
 /**
- * Component to render a list of features.
+ * Component to render a section with a background colour and children.
  */
 const PageSection = ({ children, bgColour }: Props) => {
-  // console.log(features);
-
   return (
     <section
       style={{
@@ -22,4 +19,5 @@ const PageSection = ({ children, bgColour }: Props) => {
     </section>
   );
 };
+
 export default PageSection;
