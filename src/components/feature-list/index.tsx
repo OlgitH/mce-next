@@ -52,7 +52,7 @@ const FeatureListComponent = ({ features }: Props) => {
 
                 {isFilled.richText(text) && (
                   <PrismicRichText
-                    field={title}
+                    field={text}
                     components={{
                       paragraph: ({
                         children,
