@@ -32,7 +32,7 @@ type Context = {
 const Banner = ({ slice, context }: BannerProps): JSX.Element => {
   const bgColourField = slice.primary.background_colour as BrandColourField;
   const textColourField = slice.primary.text_colour as BrandColourField;
-  console.log("BG...", bgColourField);
+  // console.log("banner image", slice.primary.background_image);
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -45,7 +45,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
       }}
     >
       <CoverImage
-        src={slice.primary.background_image}
+        image={slice.primary.background_image}
         bgColour={bgColourField?.data?.colour_code || ""}
         opacity={
           slice.primary.opacity ? parseFloat(slice.primary.opacity) : undefined

@@ -1,11 +1,13 @@
+"use client";
+
 import cn from "classnames";
 import Link from "next/link";
 import Image from "next/image";
-import { isFilled, ImageFieldImage } from "@prismicio/client";
+import { isFilled, ImageField } from "@prismicio/client";
 
 type Props = {
   title?: string;
-  src: ImageFieldImage;
+  image: ImageField;
   slug?: string;
   children?: React.ReactNode;
   width?: number;
@@ -18,7 +20,7 @@ type Props = {
 
 const CoverImage = ({
   title,
-  src,
+  image,
   slug,
   width,
   height,
@@ -28,49 +30,66 @@ const CoverImage = ({
   opacity,
   overlay,
 }: Props) => {
-  const image = isFilled.image(src) ? (
-    <Image
-      src={src.url}
-      alt={alt || src.alt || ""}
-      fill
-      className="object-cover object-center"
-      sizes="100vw"
-      priority
-    />
-  ) : null;
+  console.log("[CoverImage] Props:", {
+    title,
+    image,
+    slug,
+    width,
+    height,
+    alt,
+    bgColour,
+    opacity,
+    overlay,
+  });
+  console.log("[CoverImage] isFilled.image(image):", isFilled.image(image));
+  if (isFilled.image(image)) {
+    console.log("[CoverImage] image.url:", image.url);
+    console.log("[CoverImage] image.alt:", image.alt);
+  }
 
   return (
     <>
-      <div className="sm:mx-0 z-0 w-full relative aspect-video">
-        {slug && image ? (
-          <Link as={`/posts/${slug}`} href="/posts/[slug]" aria-label={title}>
-            {image}
+      <div className="sm:mx-0 z-0 w-full h-full relative">
+        {slug && isFilled.image(image) ? (
+          <Link
+            as={`/posts/${slug}`}
+            href="/posts/[slug]"
+            aria-label={title}
+            className="block relative w-full h-full"
+          >
+            <Image
+              src={image.url}
+              alt={alt || image.alt || ""}
+              fill
+              className="object-cover object-center"
+              sizes="100vw"
+              priority
+            />
           </Link>
         ) : (
-          image
+          isFilled.image(image) && (
+            <Image
+              src={image.url}
+              alt={alt || image.alt || ""}
+              fill
+              className="object-cover object-center"
+              sizes="100vw"
+              priority
+            />
+          )
         )}
       </div>
 
       {overlay && (
-        <>
-          {/* Example overlays */}
-          {/* Full overlay */}
-          {/* <div
-            className="overlay w-full h-full absolute top-0 left-0 z-10"
-            style={{ backgroundColor: bgColour ?? "", opacity: opacity ?? 0.6 }}
-          ></div> */}
-
-          {/* Half-overlay with fade-out effect */}
-          {/* <div
-            className="half-overlay h-full w-full absolute top-0 left-0 z-10"
-            style={{
-              background: `linear-gradient(to right, ${bgColour} 50%, transparent 100%)`,
-            }}
-          ></div> */}
-        </>
+        <div
+          className="absolute top-0 left-0 w-full h-full z-10"
+          style={{
+            backgroundColor: bgColour || "black",
+            opacity: opacity ?? 0.5,
+          }}
+        />
       )}
 
-      {/* Inner content */}
       <div className="inner z-30 absolute top-0 left-0 text-white w-full h-full flex justify-start items-center">
         <div className="z-20 container px-4">{children}</div>
       </div>
