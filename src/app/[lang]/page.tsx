@@ -5,7 +5,6 @@ import { createClient } from "@/prismicio";
 import { Metadata } from "next";
 import { Layout } from "@/components/layout";
 import { components } from "@/slices";
-import { PageSectionField } from "@/app/types";
 import PageSection from "@/components/page-section";
 
 type Props = {
@@ -214,7 +213,8 @@ export default async function Index({ params }: Props) {
             <PageSection
               key={i}
               bgColour={
-                pageSectionField.data?.background_colour.data.colour_code ?? ""
+                pageSectionField.data?.background_colour.data.colour_code ??
+                null
               }
             >
               <SliceZone

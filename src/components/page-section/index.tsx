@@ -1,8 +1,9 @@
+import { KeyTextField } from "@prismicio/client";
 import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  bgColour: string;
+  bgColour?: KeyTextField;
 };
 
 /**
@@ -12,7 +13,7 @@ const PageSection = ({ children, bgColour }: Props) => {
   return (
     <section
       style={{
-        backgroundColor: bgColour,
+        backgroundColor: bgColour && bgColour,
       }}
     >
       {children}
