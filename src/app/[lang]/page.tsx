@@ -6,6 +6,11 @@ import { Metadata } from "next";
 import { Layout } from "@/components/layout";
 import { components } from "@/slices";
 import PageSection from "@/components/page-section";
+import { isFilled } from "@prismicio/client";
+import type {
+  PageSectionDocumentData,
+  BrandColourDocumentData,
+} from "@/../prismicio-types";
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -204,26 +209,26 @@ export default async function Index({ params }: Props) {
         </div>
       )}
       {/* Page sections */}
-      {page.data.page_sections &&
-        page.data.page_sections.map((item, i) => {
-          // console.log("PS: ", item);
+      {page.data.page_sections?.map((item, i) => {
+        const section = item.page_section;
 
-          const pageSectionField = item.page_section as PageSectionField;
-          return (
-            <PageSection
-              key={i}
-              bgColour={
-                pageSectionField.data?.background_colour.data.colour_code ??
-                null
-              }
-            >
-              <SliceZone
-                slices={pageSectionField.data?.slices}
-                components={components}
-              />
-            </PageSection>
-          );
-        })}
+        // Use isFilled to check if the page_section is valid
+        if (!isFilled.contentRelationship(section)) return null;
+
+        // Infer the correct type now that it's confirmed to be filled
+        const data = section.data as PageSectionDocumentData;
+
+        // Use isFilled again for nested background_colour
+        const bgColour = isFilled.contentRelationship(data.background_colour)
+          ? (data.background_colour.data as BrandColourDocumentData).colour_code
+          : "";
+
+        return (
+          <PageSection key={i} bgColour={bgColour}>
+            <SliceZone slices={data.slices ?? []} components={components} />
+          </PageSection>
+        );
+      })}
     </Layout>
   );
 }

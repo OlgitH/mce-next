@@ -10,7 +10,7 @@ import type {
   PageSectionDocumentData,
   BrandColourDocumentData,
 } from "@/../prismicio-types";
-import type { FilledContentRelationshipField } from "@prismicio/client";
+
 import PageSection from "@/components/page-section";
 type Props = {
   params: Promise<{ uid: string; lang: string }>;
