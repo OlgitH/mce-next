@@ -13,7 +13,7 @@ const PageSection = ({ children, bgColour }: Props) => {
   return (
     <section
       style={{
-        backgroundColor: bgColour && bgColour,
+        backgroundColor: bgColour ? bgColour : undefined,
       }}
     >
       {children}
