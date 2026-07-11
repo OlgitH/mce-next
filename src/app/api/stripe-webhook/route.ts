@@ -2,21 +2,12 @@ import { google } from "googleapis";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY!;
-const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
-
-// Google Sheets API credentials
-const SERVICE_ACCOUNT_EMAIL = process.env.SERVICE_ACCOUNT_EMAIL!;
-const SERVICE_ACCOUNT_PRIVATE_KEY =
-  process.env.SERVICE_ACCOUNT_PRIVATE_KEY!.replace(/\\n/g, "\n");
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID!;
-
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: "2022-11-15" as any, // Casting apiVersion to `any` to bypass type checking
-});
-
 // Google Auth Setup
 async function authenticateGoogleSheets() {
+  const SERVICE_ACCOUNT_EMAIL = process.env.SERVICE_ACCOUNT_EMAIL!;
+  const SERVICE_ACCOUNT_PRIVATE_KEY =
+    process.env.SERVICE_ACCOUNT_PRIVATE_KEY!.replace(/\\n/g, "\n");
+
   const auth = new google.auth.JWT(
     SERVICE_ACCOUNT_EMAIL,
     undefined,
@@ -28,6 +19,7 @@ async function authenticateGoogleSheets() {
 
 // Save data to Google Sheets
 async function saveToSpreadsheet(session: any) {
+  const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID!;
   const sheets = await authenticateGoogleSheets();
 
   try {
@@ -79,6 +71,11 @@ async function saveToSpreadsheet(session: any) {
 
 export async function POST(request: Request) {
   try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: "2022-11-15" as any, // Casting apiVersion to `any` to bypass type checking
+    });
+    const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+
     // Retrieve the raw body and the Stripe signature from the request headers
     const body = await request.text(); // This gives the raw request body
     const signature = request.headers.get("stripe-signature"); // signature can be null
