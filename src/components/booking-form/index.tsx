@@ -116,6 +116,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   // Use quantityAdult and quantityChildren consistently
   const [selectedTickets, setSelectedTickets] = useState<
     {
+      id: number;
       reference: string;
       label: string;
       price: number;
@@ -141,20 +142,23 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
   const getFullPhone = () =>
     `${formData.countryCode}${formData.phone.replace(/\s+/g, "")}`;
 
-  // Centralized handler for quantity changes
+  // Centralized handler for quantity changes. Ticket rows are keyed by their
+  // index rather than `reference` because Prismic tour dates aren't guaranteed
+  // to have a (non-empty, unique) reference filled in.
   const handleTicketQuantityChange = (
     tour: Tour,
     qty: number,
-    type: "adult" | "children"
+    type: "adult" | "children",
+    id: number
   ) => {
-    if (!tour.reference || tour.price === null) return;
+    if (tour.price === null) return;
 
     setSelectedTickets((prev) => {
-      if (tour.reference === null || tour.price === null) {
+      if (tour.price === null) {
         // Defensive fallback, return previous state unchanged
         return prev;
       }
-      const index = prev.findIndex((t) => t.reference === tour.reference);
+      const index = prev.findIndex((t) => t.id === id);
       const priceChildren = tour.price_children ?? tour.price;
 
       if (index > -1) {
@@ -181,7 +185,8 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
         return [
           ...prev,
           {
-            reference: tour.reference,
+            id,
+            reference: tour.reference || tour.label || "",
             label: tour.label || "",
             price: tour.price,
             quantityAdult: type === "adult" ? qty : 0,
@@ -294,9 +299,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
           {t.selectTour}
         </label>
         {tours.map((tour, i) => {
-          const existing = selectedTickets.find(
-            (t) => t.reference === tour.reference
-          );
+          const existing = selectedTickets.find((t) => t.id === i);
           return (
             <div key={i} className="flex flex-col gap-2 my-10">
               <span className="font-semibold text-lg">{tour.label}</span>
@@ -309,7 +312,8 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
                       handleTicketQuantityChange(
                         tour,
                         parseInt(e.target.value, 10),
-                        "adult"
+                        "adult",
+                        i
                       )
                     }
                     className="border rounded px-2 py-1 w-20 text-center text-black"
@@ -330,7 +334,8 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
                       handleTicketQuantityChange(
                         tour,
                         parseInt(e.target.value, 10),
-                        "children"
+                        "children",
+                        i
                       )
                     }
                     className="border rounded px-2 py-1 w-20 text-center text-black"
