@@ -159,7 +159,7 @@ export default async function Tour({ params }: Props) {
         )}
 
         <SliceZone
-          context={{ locale: lang }}
+          context={{ locale: lang, hasBookingForm: hasAvailableDates }}
           slices={tour.data.slices}
           components={components}
         />
@@ -168,7 +168,7 @@ export default async function Tour({ params }: Props) {
         {hasAvailableDates && (
           <section
             id="booking-form"
-            className="booking-section py-8 bg-emerald-900 text-cream"
+            className="booking-section scroll-mt-28 py-8 bg-emerald-900 text-cream"
           >
             <div className="container mx-auto px-4 sm:px-0 flex justify-center">
               <BookingForm tours={dates} lang={lang} />

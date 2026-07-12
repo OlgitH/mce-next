@@ -24,7 +24,12 @@ type BrandColourField = ContentRelationshipField<"brand_colour"> & {
  */
 type Context = {
   bookingLink?: { url: string }; // Made optional to allow for cases where context is undefined
+  hasBookingForm?: boolean; // Whether a #booking-form section exists on this page
+  locale?: string;
 };
+
+const bookNowLabel = (locale?: string) =>
+  locale?.startsWith("es") ? "Reservar ahora" : "Book now";
 
 /**
  * Component for "Banner" Slices.
@@ -66,23 +71,15 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
               ),
             }}
           />
-          {slice.primary.show_social_links && <Socials />}
-          {/* {context?.bookingLink?.url && (
-            <button
-              className="text-2xl py-2 px-4 border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
-              style={{
-                backgroundColor: bgColourField?.data?.colour_code ?? "white",
-              }}
+          {context?.hasBookingForm && (
+            <a
+              href="#booking-form"
+              className="inline-block text-2xl py-2 px-6 rounded-full border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
             >
-              <a
-                href={context.bookingLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Book now
-              </a>
-            </button>
-          )} */}
+              {bookNowLabel(context?.locale)}
+            </a>
+          )}
+          {slice.primary.show_social_links && <Socials />}
         </div>
       </CoverImage>
     </section>
