@@ -55,11 +55,10 @@ const TourInfoSection = ({
             }}
           />
 
-          {slice.primary.gallery_images ? (
+          {slice.primary.gallery_images &&
+          slice.primary.gallery_images.length > 0 ? (
             <Gallery images={slice.primary.gallery_images as Image[]} />
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
         <div className="details basis-1/2">
           <div className="mb-10">

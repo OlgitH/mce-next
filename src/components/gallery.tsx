@@ -19,7 +19,7 @@ const Gallery = ({ images }: Props) => {
 
   // Ensure images are available and not empty
   if (!images || images.length === 0) {
-    return <div>No images available</div>;
+    return null;
   }
 
   // Function to go to the next slide
@@ -37,7 +37,7 @@ const Gallery = ({ images }: Props) => {
 
   // If there is no current image, return a fallback
   if (!currentImage) {
-    return <div>No image found</div>;
+    return null;
   }
 
   return (

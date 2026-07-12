@@ -31,3 +31,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# tour import working files (docx + images, not source)
+/tours-import
