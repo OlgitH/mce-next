@@ -242,7 +242,8 @@ type PageDocumentDataSlicesSlice =
   | TextSectionSlice
   | FeatureAreaSlice
   | TourSectionSlice
-  | BannerSlice;
+  | BannerSlice
+  | CategoryLinksSlice;
 
 /**
  * Item in *Page → Page Sections*
@@ -832,6 +833,96 @@ type BannerSliceVariation = BannerSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slice
  */
 export type BannerSlice = prismic.SharedSlice<"banner", BannerSliceVariation>;
+
+/**
+ * Item in *CategoryLinks → Default → Primary → Cards*
+ */
+export interface CategoryLinksSliceDefaultPrimaryCardsItem {
+  /**
+   * Label field in *CategoryLinks → Default → Primary → Cards*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Colombia Tours
+   * - **API ID Path**: category_links.default.primary.cards[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Background Image field in *CategoryLinks → Default → Primary → Cards*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category_links.default.primary.cards[].background_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  background_image: prismic.ImageField<"Mobile">;
+
+  /**
+   * Link field in *CategoryLinks → Default → Primary → Cards*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category_links.default.primary.cards[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.ContentRelationshipField<"page">;
+}
+
+/**
+ * Primary content in *CategoryLinks → Default → Primary*
+ */
+export interface CategoryLinksSliceDefaultPrimary {
+  /**
+   * Title field in *CategoryLinks → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category_links.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Cards field in *CategoryLinks → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category_links.default.primary.cards[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  cards: prismic.GroupField<Simplify<CategoryLinksSliceDefaultPrimaryCardsItem>>;
+}
+
+/**
+ * Default variation for CategoryLinks Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CategoryLinksSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CategoryLinksSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *CategoryLinks*
+ */
+type CategoryLinksSliceVariation = CategoryLinksSliceDefault;
+
+/**
+ * CategoryLinks Shared Slice
+ *
+ * - **API ID**: `category_links`
+ * - **Description**: CategoryLinks
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CategoryLinksSlice = prismic.SharedSlice<
+  "category_links",
+  CategoryLinksSliceVariation
+>;
 
 /**
  * Primary content in *FeatureSection → Default → Primary*
@@ -1477,6 +1568,11 @@ declare module "@prismicio/client" {
       BannerSliceDefaultPrimary,
       BannerSliceVariation,
       BannerSliceDefault,
+      CategoryLinksSlice,
+      CategoryLinksSliceDefaultPrimaryCardsItem,
+      CategoryLinksSliceDefaultPrimary,
+      CategoryLinksSliceVariation,
+      CategoryLinksSliceDefault,
       FeatureAreaSlice,
       FeatureAreaSliceDefaultPrimary,
       FeatureAreaSliceVariation,

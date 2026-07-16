@@ -38,6 +38,9 @@
             },
             "banner": {
               "type": "SharedSlice"
+            },
+            "category_links": {
+              "type": "SharedSlice"
             }
           }
         }

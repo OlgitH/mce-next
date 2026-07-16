@@ -1,51 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PrismicNextLink } from "@prismicio/next";
+
 type Props = {
   picture?: string;
   alt?: string;
   children?: React.ReactNode;
-  bgColour?: string;
-  opacity?: number;
   priority?: boolean;
   link?: string;
   locale?: string;
 };
 
-const FeaturedTour = ({
-  children,
-  picture,
-  alt,
-  bgColour,
-  opacity,
-  priority,
-  link,
-}: Props) => {
+const FeaturedTour = ({ children, picture, alt, priority, link }: Props) => {
   return (
-    <div className="box-border grow overflow-hidden relative group">
+    <>
       {link && (
-        <Link href={link} className="p-10 left-0 w-full h-full">
-          <div className="image relative h-[240px] w-full mb-4">
-            {picture && (
-              <Image
-                src={picture}
-                fill
-                alt={alt ? alt : "picture with no alt text"}
-                className="z-0 object-cover relative"
-                priority={priority ?? false}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            )}
-            <div
-              style={{ backgroundColor: bgColour }}
-              className="transition-opacity duration-700 opacity-0 pointer-events-none group-hover:opacity-40 group-hover:pointer-events-auto w-full h-full z-10 absolute left-0 top-0"
-            ></div>
+        <Link
+          href={link}
+          className="group relative block h-64 overflow-hidden rounded-lg"
+        >
+          {picture && (
+            <Image
+              src={picture}
+              fill
+              alt={alt ? alt : "picture with no alt text"}
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              priority={priority ?? false}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          )}
+          <div className="absolute inset-0 bg-black/30 transition-colors duration-300 group-hover:bg-black/40" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
+            {children}
           </div>
-
-          <div className="relative z-20">{children}</div>
         </Link>
       )}
-    </div>
+    </>
   );
 };
 

@@ -146,6 +146,16 @@ export default async function Page({ params }: Props) {
               }
             }
           }
+
+          ... on category_links {
+            variation {
+              ...on default {
+                primary {
+                  ...primaryFields
+                }
+              }
+            }
+          }
         }
       }
     }`,
@@ -195,7 +205,7 @@ export async function generateStaticParams() {
 
   const pages = await client.getAllByType("page", {
     lang: "*",
-    filters: [prismic.filter.not("my.page.uid", "homepage")],
+    filters: [prismic.filter.not("my.page.uid", "home")],
   });
 
   return pages.map((page) => ({

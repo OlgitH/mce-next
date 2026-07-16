@@ -19,6 +19,15 @@ const nextConfig = async () => {
         },
       ],
     },
+    async redirects() {
+      return [
+        {
+          source: "/:lang/homepage",
+          destination: "/:lang/uk-tours",
+          permanent: true,
+        },
+      ];
+    },
   };
 };
 

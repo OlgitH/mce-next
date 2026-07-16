@@ -18,7 +18,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const client = createClient();
-  const page = await client.getByUID("page", "homepage", { lang });
+  const page = await client.getByUID("page", "home", { lang });
   console.log("meta title: ", page.data.meta_title);
 
   return {
@@ -43,7 +43,7 @@ export default async function Index({ params }: Props) {
 
   const features = await client.getAllByType("feature", { lang });
 
-  const page = await client.getByUID("page", "homepage", {
+  const page = await client.getByUID("page", "home", {
     lang,
     graphQuery: `{
       page {
@@ -179,8 +179,16 @@ export default async function Index({ params }: Props) {
               }
             }
           }
-        
-  
+
+          ... on category_links {
+            variation {
+              ...on default {
+                primary {
+                  ...primaryFields
+                }
+              }
+            }
+          }
         }
       }
     }`,
@@ -238,7 +246,7 @@ export async function generateStaticParams() {
 
   const pages = await client.getAllByType("page", {
     lang: "*",
-    filters: [prismic.filter.at("my.page.uid", "homepage")],
+    filters: [prismic.filter.at("my.page.uid", "home")],
   });
 
   return pages.map((page) => {

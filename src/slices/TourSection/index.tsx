@@ -51,20 +51,17 @@ const TourSection = ({ slice }: TourSectionProps): JSX.Element => {
           {slice.primary.tours &&
             slice.primary.tours.map((item, i) => {
               const tourField = item.tour as TourField;
-              const bgColourField2 = tourField.data
-                ?.background_colour as BrandColourField;
-              const colour = bgColourField2?.data?.colour_code ?? "";
 
               return (
                 <FeaturedTour
                   key={i}
                   picture={tourField.data?.feature_image?.url ?? ""}
-                  bgColour={colour}
                   alt={tourField.data?.feature_image?.alt ?? ""}
                   link={`/${tourField.lang}/tours/${tourField.uid}`}
-                  opacity={tourField.data?.opacity}
                 >
-                  <h2>{tourField.data?.title || "No title"}</h2>
+                  <h2 className="text-2xl font-bold text-white">
+                    {tourField.data?.title || "No title"}
+                  </h2>
                   <p>{tourField.data?.description || "No description"}</p>
                 </FeaturedTour>
               );

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 
 export const components = {
   banner: dynamic(() => import("./Banner")),
+  category_links: dynamic(() => import("./CategoryLinks")),
   feature_area: dynamic(() => import("./FeatureSection")),
   feature_list: dynamic(() => import("./FeatureList")),
   image: dynamic(() => import("./Image")),
