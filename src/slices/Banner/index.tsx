@@ -74,7 +74,7 @@ const Banner = ({ slice, context }: BannerProps): JSX.Element => {
           {context?.hasBookingForm && (
             <a
               href="#booking-form"
-              className="inline-block text-2xl py-2 px-6 rounded-full border border-cream shadow-sm bg-gradient-to-r from-indigo-400 to-indigo-600"
+              className="inline-block text-2xl py-2 px-6 rounded-full shadow-sm bg-darkBlue"
             >
               {bookNowLabel(context?.locale)}
             </a>
