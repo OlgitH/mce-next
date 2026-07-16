@@ -62,7 +62,9 @@ const TourSection = ({ slice }: TourSectionProps): JSX.Element => {
                   <h2 className="text-2xl font-bold text-white">
                     {tourField.data?.title || "No title"}
                   </h2>
-                  <p>{tourField.data?.description || "No description"}</p>
+                  {tourField.data?.description && (
+                    <p>{tourField.data.description}</p>
+                  )}
                 </FeaturedTour>
               );
             })}

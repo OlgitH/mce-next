@@ -95,7 +95,7 @@ const InputField = ({
       type={type}
       value={value}
       onChange={onChange}
-      className="w-full rounded px-3 py-2 border"
+      className="w-full rounded px-3 py-2 border text-black"
       required
     />
   </div>
@@ -287,7 +287,7 @@ export default function BookingForm({ tours, lang = "en" }: BookingFormProps) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="flex-grow rounded px-3 py-2 border"
+            className="flex-grow rounded px-3 py-2 border text-black"
             placeholder="e.g. 612345678"
             required
           />
