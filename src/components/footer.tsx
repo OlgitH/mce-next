@@ -7,7 +7,7 @@ function Footer() {
         <div className="py-28 flex flex-col items-center w-full">
           <h3 className="">
             Website built by
-            <a href="https://www.greencrown.studio"> AquiCreative</a>
+            <a href="https://www.greencrown.studio">Greencrown Studio</a>
           </h3>
           <p className="mx-3 mb-6 lg:mb-0">
             Greencrown Studio &copy;2024
